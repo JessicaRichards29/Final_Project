@@ -359,14 +359,17 @@ display: none;
 
 <div id="this-is-my-data-about-trees" class="section level1">
 <h1>This is my data about trees</h1>
+<div id="source" class="section level3">
+<h3>Source</h3>
 <p>link to original authors: <a href="https://doi.org/10.5061/dryad.xd2547dpw" class="uri">https://doi.org/10.5061/dryad.xd2547dpw</a></p>
 <p>citation: Wood, K., Kobe, R., Ibáñez, I., et al. (2023). Tree
 seedling functional traits mediate plant-soil feedback survival
 responses across a gradient of light availability. Dryad. <a href="https://doi.org/10.5061/dryad.xd2547dpw" class="uri">https://doi.org/10.5061/dryad.xd2547dpw</a></p>
 <p>funded by: National Science Foundation: NSF DEB 145732, Michigan
 State University, and Alma College</p>
-<div id="methods" class="section level3">
-<h3>methods</h3>
+</div>
+<div id="methodswhat-this-data-is" class="section level3">
+<h3>Methods/What this Data is</h3>
 <p>This experiment was a factorial blocked design field experiment. 4
 tree species 7 soil sources and a variety of forest understory light
 levels were used. There were a total of 3,024 seedlings. Survival was
@@ -375,55 +378,125 @@ measure mycorrhizal colonization, phenolics, lignin, and NSC at 3 weeks.
 Cox proportional hazards survival models were used to evaluate survival
 and linear mixed effects models were used to test how light availability
 and soil source influence traits.</p>
-<p>okay but say that in your own words lol</p>
 </div>
-<div id="things-to-mention-about-data" class="section level3">
-<h3>things to mention about data:</h3>
+<div id="original-data" class="section level2 tabset">
+<h2 class="tabset">Original Data</h2>
+<div id="output" class="section level3">
+<h3>Output</h3>
+<p>Preview of original Data</p>
+<pre><code>##     No Plot Subplot         Species Light_ISF Light_Cat Core            Soil
+## 1  126    1       C  Acer saccharum     0.106       Med 2017 Prunus serotina
+## 2   11    1       C    Quercus alba     0.106       Med 2017   Quercus rubra
+## 3   12    1       C   Quercus rubra     0.106       Med 2017 Prunus serotina
+## 4 2823    7       D  Acer saccharum     0.080       Med 2016 Prunus serotina
+## 5 5679   14       A  Acer saccharum     0.060       Low 2017 Prunus serotina
+## 6   18    1       C Prunus serotina     0.106       Med 2016     Acer rubrum
+##   Adult     Sterile    Conspecific Myco SoilMyco PlantDate   AMF   EMF
+## 1     I Non-Sterile Heterospecific  AMF      AMF   6/11/18 22.00    NA
+## 2   970 Non-Sterile Heterospecific  EMF      EMF   5/25/18 15.82 31.07
+## 3     J Non-Sterile Heterospecific  EMF      AMF   5/31/18 24.45 28.19
+## 4     J Non-Sterile Heterospecific  AMF      AMF   6/11/18 22.23    NA
+## 5   689 Non-Sterile Heterospecific  AMF      AMF   6/11/18 21.15    NA
+## 6  1332 Non-Sterile Heterospecific  AMF      AMF    6/5/18 35.29    NA
+##   Phenolics Lignin   NSC Census  Time Event Harvest Alive
+## 1     -0.56  13.86 12.15      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
+## 2      5.19  20.52 19.29     33 115.5     0    &lt;NA&gt;     X
+## 3      3.36  24.74 15.01     18  63.0     1    &lt;NA&gt;  &lt;NA&gt;
+## 4     -0.71  14.29 12.36      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
+## 5     -0.58  10.85 11.20      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
+## 6      0.30  10.80 13.79      7  24.5     1    &lt;NA&gt;  &lt;NA&gt;</code></pre>
+</div>
+<div id="r-code" class="section level3">
+<h3>R code</h3>
+<p>Preview of original Data</p>
+<pre class="r"><code>tree_dat &lt;- read.csv(&#39;Tree_Data.csv&#39;)
+head(tree_dat)</code></pre>
+<pre><code>##     No Plot Subplot         Species Light_ISF Light_Cat Core            Soil
+## 1  126    1       C  Acer saccharum     0.106       Med 2017 Prunus serotina
+## 2   11    1       C    Quercus alba     0.106       Med 2017   Quercus rubra
+## 3   12    1       C   Quercus rubra     0.106       Med 2017 Prunus serotina
+## 4 2823    7       D  Acer saccharum     0.080       Med 2016 Prunus serotina
+## 5 5679   14       A  Acer saccharum     0.060       Low 2017 Prunus serotina
+## 6   18    1       C Prunus serotina     0.106       Med 2016     Acer rubrum
+##   Adult     Sterile    Conspecific Myco SoilMyco PlantDate   AMF   EMF
+## 1     I Non-Sterile Heterospecific  AMF      AMF   6/11/18 22.00    NA
+## 2   970 Non-Sterile Heterospecific  EMF      EMF   5/25/18 15.82 31.07
+## 3     J Non-Sterile Heterospecific  EMF      AMF   5/31/18 24.45 28.19
+## 4     J Non-Sterile Heterospecific  AMF      AMF   6/11/18 22.23    NA
+## 5   689 Non-Sterile Heterospecific  AMF      AMF   6/11/18 21.15    NA
+## 6  1332 Non-Sterile Heterospecific  AMF      AMF    6/5/18 35.29    NA
+##   Phenolics Lignin   NSC Census  Time Event Harvest Alive
+## 1     -0.56  13.86 12.15      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
+## 2      5.19  20.52 19.29     33 115.5     0    &lt;NA&gt;     X
+## 3      3.36  24.74 15.01     18  63.0     1    &lt;NA&gt;  &lt;NA&gt;
+## 4     -0.71  14.29 12.36      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
+## 5     -0.58  10.85 11.20      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
+## 6      0.30  10.80 13.79      7  24.5     1    &lt;NA&gt;  &lt;NA&gt;</code></pre>
+</div>
+</div>
+</div>
+<div id="cleaned-data" class="section level1">
+<h1>Cleaned Data</h1>
+<div id="columns-cleaned-data" class="section level3">
+<h3>Columns cleaned data</h3>
 <ul>
-<li>generally what the study was</li>
-<li>where it came from (cite it)</li>
-<li>light ISF vs light Cat</li>
-<li>what core, soil, adult, conspecific mean</li>
-<li>Myco vs SoilMyco -AMF ad EMF</li>
-<li>Phenolics, NSC, Lignin</li>
+<li>Species - 4 species</li>
+<li>Light_ISF vs Light_Cat, Light_ISF</li>
+<li>Core</li>
+<li>Soil</li>
+<li>Adult</li>
+<li>Conspecific</li>
+<li>Myco and SoilMyco</li>
+<li>PlantDate</li>
+<li>AMF vs EMF</li>
+<li>Phenolics</li>
+<li>Lignin</li>
+<li>NSC</li>
 <li>Census vs Time</li>
-<li>Event, Harvest, and Alive, I want to make a column with all the
-trees, and then “dead, alive, or harvested” as the three options</li>
+<li>Event vs Harvest vs Alive</li>
 </ul>
 </div>
-<div id="results" class="section level2 tabset">
-<h2 class="tabset">Results</h2>
+<div id="what-do-i-want-in-cleaned-data-set" class="section level3">
+<h3>what do I want in cleaned data set</h3>
+<ul>
+<li>keep “No” “Plot” “Subplot” “Species”<br />
+</li>
+<li>only keep “Light_Cat”</li>
+<li>maybe keep “Core”?</li>
+<li>have only one Soil column with conspecific sterile, species,
+etc.</li>
+<li>maybe keep conspecific?</li>
+<li>idk what myco and soilmyco are</li>
+<li>maybe keep adult?</li>
+<li>probably not plantdate unless relevant</li>
+<li>Figure out what AMF and EMF are</li>
+<li>Keep phenolics, lignin, and nsc</li>
+<li>keep time</li>
+<li>Change Event, Harvest, and Alive into one column (well really
+two)</li>
+</ul>
+</div>
+<div id="cleaned-data-1" class="section level2 tabset">
+<h2 class="tabset">Cleaned Data</h2>
 <div id="plots" class="section level3">
 <h3>Plots</h3>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.4.2</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.2     
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<p>cleaned data has less columns, better for plotting/modeling</p>
 </div>
 <div id="tables" class="section level3">
 <h3>Tables</h3>
-<p>We show the data in this tab.</p>
-<pre class="r"><code>head(mtcars)</code></pre>
-<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
-## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
+<p>cleaned data has less columns, better for plotting/modeling</p>
 </div>
 </div>
 </div>
-<div id="this-is-me-plotting-the-data" class="section level1">
-<h1>This is me plotting the data</h1>
-<div id="results-1" class="section level2 tabset">
+<div id="plotting-data" class="section level1">
+<h1>Plotting Data</h1>
+</div>
+<div id="modelling-data" class="section level1">
+<h1>Modelling Data</h1>
+</div>
+<div id="conclusions" class="section level1">
+<h1>Conclusions</h1>
+<div id="results" class="section level2 tabset">
 <h2 class="tabset">Results</h2>
 <div id="plots-1" class="section level3">
 <h3>Plots</h3>

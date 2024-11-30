@@ -9,8 +9,14 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r load packages, echo=FALSE, include=FALSE}
+library(tidyverse)
+
+```
+
 # This is my data about trees
 
+### Source
 link to original authors:
 https://doi.org/10.5061/dryad.xd2547dpw 
 
@@ -22,43 +28,99 @@ availability. Dryad. https://doi.org/10.5061/dryad.xd2547dpw
 funded by: National Science Foundation: NSF DEB 145732, Michigan State University,
 and Alma College
 
-### methods
+### Methods/What this Data is
 This experiment was a factorial blocked design field experiment. 4 tree species 7 soil sources and a variety of forest understory light levels were used. There were a total of 3,024 seedlings. Survival was measured twice a week and seedlings were randomly selected each time to measure mycorrhizal colonization, phenolics, lignin, and NSC at 3 weeks. Cox proportional hazards survival models were used to evaluate survival and linear mixed effects models were used to test how light availability and soil source influence traits. 
 
-okay but say that in your own words lol
 
-### things to mention about data:
 
-- generally what the study was
-- where it came from (cite it)
-- light ISF vs light Cat
-- what core, soil, adult, conspecific mean
-- Myco vs SoilMyco
--AMF ad EMF 
-- Phenolics, NSC, Lignin
+
+## Original Data {.tabset}
+
+
+### Output
+
+Preview of original Data
+
+```{r original data output, echo=FALSE, include=TRUE}
+tree_dat <- read.csv('Tree_Data.csv')
+head(tree_dat)
+
+```
+
+### R code
+
+Preview of original Data
+
+```{r original data r code, echo=TRUE}
+tree_dat <- read.csv('Tree_Data.csv')
+head(tree_dat)
+
+```
+
+
+# Cleaned Data
+
+### Columns cleaned data 
+- Species - 4 species
+- Light_ISF vs Light_Cat, Light_ISF
+- Core
+- Soil
+- Adult
+- Conspecific
+- Myco and SoilMyco
+- PlantDate
+- AMF vs EMF
+- Phenolics
+- Lignin
+- NSC
 - Census vs Time
-- Event, Harvest, and Alive, I want to make a column with all the trees, and then "dead, alive, or harvested" as the three options
+- Event vs Harvest vs Alive
 
-## Results {.tabset}
+### what do I want in cleaned data set 
+- keep "No"    "Plot"    "Subplot"   "Species"  
+- only keep "Light_Cat"
+- maybe keep "Core"?
+- have only one Soil column with conspecific sterile, species, etc. 
+- maybe keep conspecific?
+- idk what myco and soilmyco are
+- maybe keep adult?
+- probably not plantdate unless relevant
+- Figure out what AMF and EMF are
+- Keep phenolics, lignin, and nsc
+- keep time
+- Change Event, Harvest, and Alive into one column (well really two)
+
+
+
+
+## Cleaned Data {.tabset}
 
 ### Plots
-```{r tree data, echo=FALSE}
-library(tidyverse)
-tree_dat <- read.csv('Tree_Data.csv')
+
+cleaned data has less columns, better for plotting/modeling
+```{r clean data head, echo=FALSE, include=TRUE}
+
 
 
 ```
 
 ### Tables
 
-We show the data in this tab.
+cleaned data has less columns, better for plotting/modeling
+```{r clean data r code, echo=TRUE}
 
-```{r}
-head(mtcars)
+
+
 ```
 
 
-# This is me plotting the data 
+
+
+# Plotting Data
+
+# Modelling Data
+
+# Conclusions
 
 
 ## Results {.tabset}
