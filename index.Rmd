@@ -14,10 +14,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-
-# learn how to link to another R markdown 
-
-
 # Creates side by side tabs
 You can turn parallel sections to tabs in `html_document` output.
 
