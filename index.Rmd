@@ -9,7 +9,35 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+##  [BIOL-3100-Final-Project](./BIOL_3100_Final_Project)##
 
+
+
+
+# learn how to link to another R markdown 
+
+
+# Creates side by side tabs
+You can turn parallel sections to tabs in `html_document` output.
+
+## Results {.tabset}
+
+### Plots
+
+We show a scatter plot in this section.
+
+```{r, fig.dim=c(5, 3)}
+par(mar = c(4, 4, .5, .1))
+plot(mpg ~ hp, data = mtcars, pch = 19)
+```
+
+### Tables
+
+We show the data in this tab.
+
+```{r}
+head(mtcars)
+```
 
 
 
@@ -22,6 +50,29 @@ When you click the **Knit** button a document will be generated that includes bo
 ```{r cars}
 summary(cars)
 ```
+
+
+
+## Results {.tabset}
+
+### more data
+
+We show a scatter plot in this section.
+
+```{r, fig.dim=c(5, 3)}
+par(mar = c(4, 4, .5, .1))
+plot(mpg ~ hp, data = mtcars, pch = 19)
+```
+
+###  more Tables
+
+We show the data in this tab.
+
+```{r}
+head(mtcars)
+```
+
+
 
 ## Including Plots
 
