@@ -11,6 +11,52 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # This is my data about trees
 
+link to original authors:
+https://doi.org/10.5061/dryad.xd2547dpw 
+
+citation:
+Wood, K., Kobe, R., Ibáñez, I., et al. (2023). Tree seedling functional traits
+mediate plant-soil feedback survival responses across a gradient of light
+availability. Dryad. https://doi.org/10.5061/dryad.xd2547dpw
+
+funded by: National Science Foundation: NSF DEB 145732, Michigan State University,
+and Alma College
+
+### methods
+This experiment was a factorial blocked design field experiment. 4 tree species 7 soil sources and a variety of forest understory light levels were used. There were a total of 3,024 seedlings. Survival was measured twice a week and seedlings were randomly selected each time to measure mycorrhizal colonization, phenolics, lignin, and NSC at 3 weeks. Cox proportional hazards survival models were used to evaluate survival and linear mixed effects models were used to test how light availability and soil source influence traits. 
+
+okay but say that in your own words lol
+
+### things to mention about data:
+
+- generally what the study was
+- where it came from (cite it)
+- light ISF vs light Cat
+- what core, soil, adult, conspecific mean
+- Myco vs SoilMyco
+-AMF ad EMF 
+- Phenolics, NSC, Lignin
+- Census vs Time
+- Event, Harvest, and Alive, I want to make a column with all the trees, and then "dead, alive, or harvested" as the three options
+
+## Results {.tabset}
+
+### Plots
+```{r tree data, echo=FALSE}
+library(tidyverse)
+tree_dat <- read.csv('Tree_Data.csv')
+
+
+```
+
+### Tables
+
+We show the data in this tab.
+
+```{r}
+head(mtcars)
+```
+
 
 # This is me plotting the data 
 
