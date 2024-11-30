@@ -9,7 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-##  [BIOL-3100-Final-Project](./BIOL_3100_Final_Project)##
+##  [ABOUT ME](./link) | [CV](./link)
+|[BIOL-3100-Final-Project](./BIOL3100_Final_Project.Rmd)##
 
 
 
