@@ -379,60 +379,102 @@ measure mycorrhizal colonization, phenolics, lignin, and NSC at 3 weeks.
 Cox proportional hazards survival models were used to evaluate survival
 and linear mixed effects models were used to test how light availability
 and soil source influence traits.</p>
+<p>Column information</p>
+<ul>
+<li>No: identification number (total # seeds)</li>
+<li>Plot: plot tree was planted in (how many plots?)</li>
+<li>Subplot: subplot tree was planted in (how many subplots?)</li>
+<li>Species: tree species (list species)</li>
+<li>Light_ISF: light reading in ISF (range?)</li>
+<li>Light_Cat: light readings were categorized into ‘Low’ ‘Med’ or
+‘High’</li>
+<li>Core: year the soil core was taken, either 2016 or 2017</li>
+<li>Soil: indicates which of the 4 species the soil core was taken
+from</li>
+<li>Adult: indicates which adult tree the seed came from (how many
+adults?)</li>
+<li>Sterile: indicates whether the soil was steralized or not</li>
+<li>Conspecific: indicates if soil core each seedling was planted in was
+taken from it’s own species (conspecific), a different species
+(heterospecific) or steralized (sterile)</li>
+<li>Myco: Myco of the seedling AMF or EMF</li>
+<li>SoilMyco: Myco of the soil AMF, EMF or Sterile</li>
+<li>PlantDate: date each tree was planted (how many plant dates?)</li>
+<li>AMF:</li>
+<li>EMF:</li>
+<li>Phenolics:</li>
+<li>Lignin:</li>
+<li>NSC:</li>
+<li>Census:?</li>
+<li>Time: how many days each tree survived</li>
+<li>Event: indicates whether tree died during the study</li>
+<li>Harvest: indicates whether tree was harvested during the study</li>
+<li>Alive: indicates whether tree was alive at the end of the study</li>
+</ul>
 </div>
 <div id="original-data" class="section level2 tabset">
 <h2 class="tabset">Original Data</h2>
 <div id="output" class="section level3">
 <h3>Output</h3>
-<p>Preview of original Data</p>
-<pre><code>##     No Plot Subplot         Species Light_ISF Light_Cat Core            Soil
-## 1  126    1       C  Acer saccharum     0.106       Med 2017 Prunus serotina
-## 2   11    1       C    Quercus alba     0.106       Med 2017   Quercus rubra
-## 3   12    1       C   Quercus rubra     0.106       Med 2017 Prunus serotina
-## 4 2823    7       D  Acer saccharum     0.080       Med 2016 Prunus serotina
-## 5 5679   14       A  Acer saccharum     0.060       Low 2017 Prunus serotina
-## 6   18    1       C Prunus serotina     0.106       Med 2016     Acer rubrum
-##   Adult     Sterile    Conspecific Myco SoilMyco PlantDate   AMF   EMF
-## 1     I Non-Sterile Heterospecific  AMF      AMF   6/11/18 22.00    NA
-## 2   970 Non-Sterile Heterospecific  EMF      EMF   5/25/18 15.82 31.07
-## 3     J Non-Sterile Heterospecific  EMF      AMF   5/31/18 24.45 28.19
-## 4     J Non-Sterile Heterospecific  AMF      AMF   6/11/18 22.23    NA
-## 5   689 Non-Sterile Heterospecific  AMF      AMF   6/11/18 21.15    NA
-## 6  1332 Non-Sterile Heterospecific  AMF      AMF    6/5/18 35.29    NA
-##   Phenolics Lignin   NSC Census  Time Event Harvest Alive
-## 1     -0.56  13.86 12.15      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
-## 2      5.19  20.52 19.29     33 115.5     0    &lt;NA&gt;     X
-## 3      3.36  24.74 15.01     18  63.0     1    &lt;NA&gt;  &lt;NA&gt;
-## 4     -0.71  14.29 12.36      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
-## 5     -0.58  10.85 11.20      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
-## 6      0.30  10.80 13.79      7  24.5     1    &lt;NA&gt;  &lt;NA&gt;</code></pre>
+<p>Preview of Original Data</p>
+<pre><code>## Rows: 2,783
+## Columns: 24
+## $ No          &lt;int&gt; 126, 11, 12, 2823, 5679, 18, 25, 40, 26, 41, 30, 33, 34, 3…
+## $ Plot        &lt;int&gt; 1, 1, 1, 7, 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ Subplot     &lt;chr&gt; &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;D&quot;, &quot;A&quot;, &quot;C&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;C&quot;, &quot;C&quot;…
+## $ Species     &lt;chr&gt; &quot;Acer saccharum&quot;, &quot;Quercus alba&quot;, &quot;Quercus rubra&quot;, &quot;Acer s…
+## $ Light_ISF   &lt;dbl&gt; 0.106, 0.106, 0.106, 0.080, 0.060, 0.106, 0.108, 0.108, 0.…
+## $ Light_Cat   &lt;chr&gt; &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Low&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;M…
+## $ Core        &lt;int&gt; 2017, 2017, 2017, 2016, 2017, 2016, 2016, 2017, 2016, 2016…
+## $ Soil        &lt;chr&gt; &quot;Prunus serotina&quot;, &quot;Quercus rubra&quot;, &quot;Prunus serotina&quot;, &quot;Pr…
+## $ Adult       &lt;chr&gt; &quot;I&quot;, &quot;970&quot;, &quot;J&quot;, &quot;J&quot;, &quot;689&quot;, &quot;1332&quot;, &quot;891&quot;, &quot;1595&quot;, &quot;1323&quot;…
+## $ Sterile     &lt;chr&gt; &quot;Non-Sterile&quot;, &quot;Non-Sterile&quot;, &quot;Non-Sterile&quot;, &quot;Non-Sterile&quot;…
+## $ Conspecific &lt;chr&gt; &quot;Heterospecific&quot;, &quot;Heterospecific&quot;, &quot;Heterospecific&quot;, &quot;Het…
+## $ Myco        &lt;chr&gt; &quot;AMF&quot;, &quot;EMF&quot;, &quot;EMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;EMF&quot;, &quot;EMF&quot;, &quot;E…
+## $ SoilMyco    &lt;chr&gt; &quot;AMF&quot;, &quot;EMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;EMF&quot;, &quot;Sterile&quot;…
+## $ PlantDate   &lt;chr&gt; &quot;6/11/18&quot;, &quot;5/25/18&quot;, &quot;5/31/18&quot;, &quot;6/11/18&quot;, &quot;6/11/18&quot;, &quot;6/…
+## $ AMF         &lt;dbl&gt; 22.00, 15.82, 24.45, 22.23, 21.15, 35.29, 24.00, 4.00, 28.…
+## $ EMF         &lt;dbl&gt; NA, 31.07, 28.19, NA, NA, NA, 20.00, 0.00, 36.18, NA, 28.1…
+## $ Phenolics   &lt;dbl&gt; -0.56, 5.19, 3.36, -0.71, -0.58, 0.30, 5.11, 3.43, 3.83, -…
+## $ Lignin      &lt;dbl&gt; 13.86, 20.52, 24.74, 14.29, 10.85, 10.80, 18.82, 25.22, 26…
+## $ NSC         &lt;dbl&gt; 12.15, 19.29, 15.01, 12.36, 11.20, 13.79, 22.51, 14.81, 14…
+## $ Census      &lt;int&gt; 4, 33, 18, 4, 4, 7, 7, 7, 33, 7, 33, 21, 21, 17, 7, 33, 7,…
+## $ Time        &lt;dbl&gt; 14.0, 115.5, 63.0, 14.0, 14.0, 24.5, 24.5, 24.5, 115.5, 24…
+## $ Event       &lt;int&gt; 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1…
+## $ Harvest     &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;X&quot;, &quot;X&quot;, NA, NA, NA, NA, NA, NA, …
+## $ Alive       &lt;chr&gt; NA, &quot;X&quot;, NA, NA, NA, NA, NA, NA, &quot;X&quot;, NA, &quot;X&quot;, NA, NA, NA,…</code></pre>
 </div>
 <div id="r-code" class="section level3">
 <h3>R code</h3>
-<p>Preview of original Data</p>
+<p>Preview of Original Data</p>
 <pre class="r"><code>tree_dat &lt;- read.csv(&#39;Tree_Data.csv&#39;)
-head(tree_dat)</code></pre>
-<pre><code>##     No Plot Subplot         Species Light_ISF Light_Cat Core            Soil
-## 1  126    1       C  Acer saccharum     0.106       Med 2017 Prunus serotina
-## 2   11    1       C    Quercus alba     0.106       Med 2017   Quercus rubra
-## 3   12    1       C   Quercus rubra     0.106       Med 2017 Prunus serotina
-## 4 2823    7       D  Acer saccharum     0.080       Med 2016 Prunus serotina
-## 5 5679   14       A  Acer saccharum     0.060       Low 2017 Prunus serotina
-## 6   18    1       C Prunus serotina     0.106       Med 2016     Acer rubrum
-##   Adult     Sterile    Conspecific Myco SoilMyco PlantDate   AMF   EMF
-## 1     I Non-Sterile Heterospecific  AMF      AMF   6/11/18 22.00    NA
-## 2   970 Non-Sterile Heterospecific  EMF      EMF   5/25/18 15.82 31.07
-## 3     J Non-Sterile Heterospecific  EMF      AMF   5/31/18 24.45 28.19
-## 4     J Non-Sterile Heterospecific  AMF      AMF   6/11/18 22.23    NA
-## 5   689 Non-Sterile Heterospecific  AMF      AMF   6/11/18 21.15    NA
-## 6  1332 Non-Sterile Heterospecific  AMF      AMF    6/5/18 35.29    NA
-##   Phenolics Lignin   NSC Census  Time Event Harvest Alive
-## 1     -0.56  13.86 12.15      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
-## 2      5.19  20.52 19.29     33 115.5     0    &lt;NA&gt;     X
-## 3      3.36  24.74 15.01     18  63.0     1    &lt;NA&gt;  &lt;NA&gt;
-## 4     -0.71  14.29 12.36      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
-## 5     -0.58  10.85 11.20      4  14.0     1    &lt;NA&gt;  &lt;NA&gt;
-## 6      0.30  10.80 13.79      7  24.5     1    &lt;NA&gt;  &lt;NA&gt;</code></pre>
+glimpse(tree_dat)</code></pre>
+<pre><code>## Rows: 2,783
+## Columns: 24
+## $ No          &lt;int&gt; 126, 11, 12, 2823, 5679, 18, 25, 40, 26, 41, 30, 33, 34, 3…
+## $ Plot        &lt;int&gt; 1, 1, 1, 7, 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ Subplot     &lt;chr&gt; &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;D&quot;, &quot;A&quot;, &quot;C&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;C&quot;, &quot;C&quot;…
+## $ Species     &lt;chr&gt; &quot;Acer saccharum&quot;, &quot;Quercus alba&quot;, &quot;Quercus rubra&quot;, &quot;Acer s…
+## $ Light_ISF   &lt;dbl&gt; 0.106, 0.106, 0.106, 0.080, 0.060, 0.106, 0.108, 0.108, 0.…
+## $ Light_Cat   &lt;chr&gt; &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Low&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;M…
+## $ Core        &lt;int&gt; 2017, 2017, 2017, 2016, 2017, 2016, 2016, 2017, 2016, 2016…
+## $ Soil        &lt;chr&gt; &quot;Prunus serotina&quot;, &quot;Quercus rubra&quot;, &quot;Prunus serotina&quot;, &quot;Pr…
+## $ Adult       &lt;chr&gt; &quot;I&quot;, &quot;970&quot;, &quot;J&quot;, &quot;J&quot;, &quot;689&quot;, &quot;1332&quot;, &quot;891&quot;, &quot;1595&quot;, &quot;1323&quot;…
+## $ Sterile     &lt;chr&gt; &quot;Non-Sterile&quot;, &quot;Non-Sterile&quot;, &quot;Non-Sterile&quot;, &quot;Non-Sterile&quot;…
+## $ Conspecific &lt;chr&gt; &quot;Heterospecific&quot;, &quot;Heterospecific&quot;, &quot;Heterospecific&quot;, &quot;Het…
+## $ Myco        &lt;chr&gt; &quot;AMF&quot;, &quot;EMF&quot;, &quot;EMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;EMF&quot;, &quot;EMF&quot;, &quot;E…
+## $ SoilMyco    &lt;chr&gt; &quot;AMF&quot;, &quot;EMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;EMF&quot;, &quot;Sterile&quot;…
+## $ PlantDate   &lt;chr&gt; &quot;6/11/18&quot;, &quot;5/25/18&quot;, &quot;5/31/18&quot;, &quot;6/11/18&quot;, &quot;6/11/18&quot;, &quot;6/…
+## $ AMF         &lt;dbl&gt; 22.00, 15.82, 24.45, 22.23, 21.15, 35.29, 24.00, 4.00, 28.…
+## $ EMF         &lt;dbl&gt; NA, 31.07, 28.19, NA, NA, NA, 20.00, 0.00, 36.18, NA, 28.1…
+## $ Phenolics   &lt;dbl&gt; -0.56, 5.19, 3.36, -0.71, -0.58, 0.30, 5.11, 3.43, 3.83, -…
+## $ Lignin      &lt;dbl&gt; 13.86, 20.52, 24.74, 14.29, 10.85, 10.80, 18.82, 25.22, 26…
+## $ NSC         &lt;dbl&gt; 12.15, 19.29, 15.01, 12.36, 11.20, 13.79, 22.51, 14.81, 14…
+## $ Census      &lt;int&gt; 4, 33, 18, 4, 4, 7, 7, 7, 33, 7, 33, 21, 21, 17, 7, 33, 7,…
+## $ Time        &lt;dbl&gt; 14.0, 115.5, 63.0, 14.0, 14.0, 24.5, 24.5, 24.5, 115.5, 24…
+## $ Event       &lt;int&gt; 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1…
+## $ Harvest     &lt;chr&gt; NA, NA, NA, NA, NA, NA, &quot;X&quot;, &quot;X&quot;, NA, NA, NA, NA, NA, NA, …
+## $ Alive       &lt;chr&gt; NA, &quot;X&quot;, NA, NA, NA, NA, NA, NA, &quot;X&quot;, NA, &quot;X&quot;, NA, NA, NA,…</code></pre>
 </div>
 </div>
 </div>
@@ -453,22 +495,45 @@ etc.</li>
 <h2 class="tabset">Cleaned Data</h2>
 <div id="output-1" class="section level3">
 <h3>Output</h3>
-<p>cleaned data has less columns, better for plotting/modeling</p>
-<pre><code>## # A tibble: 6 × 16
-##      No  Plot Subplot Species   Light_Cat Soil  Conspecific Myco  SoilMyco   AMF
-##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;
-## 1   126     1 C       Acer sac… Med       Prun… Heterospec… AMF   AMF       22  
-## 2    11     1 C       Quercus … Med       Quer… Heterospec… EMF   EMF       15.8
-## 3    12     1 C       Quercus … Med       Prun… Heterospec… EMF   AMF       24.4
-## 4  2823     7 D       Acer sac… Med       Prun… Heterospec… AMF   AMF       22.2
-## 5  5679    14 A       Acer sac… Low       Prun… Heterospec… AMF   AMF       21.2
-## 6    18     1 C       Prunus s… Med       Acer… Heterospec… AMF   AMF       35.3
-## # ℹ 6 more variables: EMF &lt;dbl&gt;, Phenolics &lt;dbl&gt;, Lignin &lt;dbl&gt;, NSC &lt;dbl&gt;,
-## #   Time &lt;dbl&gt;, Event &lt;chr&gt;</code></pre>
+<p>The cleaned data has less columns and is better for
+plotting/modeling.</p>
+<ul>
+<li><p>Columns removed: Light_ISF, Core, Sterile, Adult, PlantDate,
+Census</p></li>
+<li><p>Columns ‘Event’, ‘Harvest’, and ‘Alive’ merged into one column
+called ‘Event’ that indicates whether a tree died, was harvested, or was
+alive at the end of the study</p></li>
+</ul>
+<pre><code>## Rows: 2,782
+## Columns: 16
+## $ No          &lt;int&gt; 126, 11, 12, 2823, 5679, 18, 25, 40, 26, 41, 30, 33, 34, 3…
+## $ Plot        &lt;int&gt; 1, 1, 1, 7, 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ Subplot     &lt;chr&gt; &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;D&quot;, &quot;A&quot;, &quot;C&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;C&quot;, &quot;C&quot;…
+## $ Species     &lt;chr&gt; &quot;Acer saccharum&quot;, &quot;Quercus alba&quot;, &quot;Quercus rubra&quot;, &quot;Acer s…
+## $ Light_Cat   &lt;chr&gt; &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Low&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;M…
+## $ Soil        &lt;chr&gt; &quot;Prunus serotina&quot;, &quot;Quercus rubra&quot;, &quot;Prunus serotina&quot;, &quot;Pr…
+## $ Conspecific &lt;chr&gt; &quot;Heterospecific&quot;, &quot;Heterospecific&quot;, &quot;Heterospecific&quot;, &quot;Het…
+## $ Myco        &lt;chr&gt; &quot;AMF&quot;, &quot;EMF&quot;, &quot;EMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;EMF&quot;, &quot;EMF&quot;, &quot;E…
+## $ SoilMyco    &lt;chr&gt; &quot;AMF&quot;, &quot;EMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;EMF&quot;, &quot;Sterile&quot;…
+## $ AMF         &lt;dbl&gt; 22.00, 15.82, 24.45, 22.23, 21.15, 35.29, 24.00, 4.00, 28.…
+## $ EMF         &lt;dbl&gt; NA, 31.07, 28.19, NA, NA, NA, 20.00, 0.00, 36.18, NA, 28.1…
+## $ Phenolics   &lt;dbl&gt; -0.56, 5.19, 3.36, -0.71, -0.58, 0.30, 5.11, 3.43, 3.83, -…
+## $ Lignin      &lt;dbl&gt; 13.86, 20.52, 24.74, 14.29, 10.85, 10.80, 18.82, 25.22, 26…
+## $ NSC         &lt;dbl&gt; 12.15, 19.29, 15.01, 12.36, 11.20, 13.79, 22.51, 14.81, 14…
+## $ Time        &lt;dbl&gt; 14.0, 115.5, 63.0, 14.0, 14.0, 24.5, 24.5, 24.5, 115.5, 24…
+## $ Event       &lt;chr&gt; &quot;Dead&quot;, &quot;Alive&quot;, &quot;Dead&quot;, &quot;Dead&quot;, &quot;Dead&quot;, &quot;Dead&quot;, &quot;Harvest&quot;…</code></pre>
 </div>
 <div id="r-code-1" class="section level3">
 <h3>R code</h3>
-<p>cleaned data has less columns, better for plotting/modeling</p>
+<p>The cleaned data has less columns and is better for
+plotting/modeling.</p>
+<ul>
+<li><p>Columns removed: Light_ISF, Core, Sterile, Adult, PlantDate,
+Census</p></li>
+<li><p>Columns ‘Event’, ‘Harvest’, and ‘Alive’ merged into one column
+called ‘Event’ that indicates whether a tree died, was harvested, or was
+alive at the end of the study</p></li>
+</ul>
 <pre class="r"><code>tree_dat_clean &lt;- tree_dat %&gt;%
   select(-c(Light_ISF, Core, Sterile, Adult, PlantDate, Census)) %&gt;%
   mutate(Event = case_when(
@@ -483,26 +548,33 @@ etc.</li>
   drop_na(Status) %&gt;%
   select(-Status)
 
-head(tree_dat_clean)</code></pre>
-<pre><code>## # A tibble: 6 × 16
-##      No  Plot Subplot Species   Light_Cat Soil  Conspecific Myco  SoilMyco   AMF
-##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;
-## 1   126     1 C       Acer sac… Med       Prun… Heterospec… AMF   AMF       22  
-## 2    11     1 C       Quercus … Med       Quer… Heterospec… EMF   EMF       15.8
-## 3    12     1 C       Quercus … Med       Prun… Heterospec… EMF   AMF       24.4
-## 4  2823     7 D       Acer sac… Med       Prun… Heterospec… AMF   AMF       22.2
-## 5  5679    14 A       Acer sac… Low       Prun… Heterospec… AMF   AMF       21.2
-## 6    18     1 C       Prunus s… Med       Acer… Heterospec… AMF   AMF       35.3
-## # ℹ 6 more variables: EMF &lt;dbl&gt;, Phenolics &lt;dbl&gt;, Lignin &lt;dbl&gt;, NSC &lt;dbl&gt;,
-## #   Time &lt;dbl&gt;, Event &lt;chr&gt;</code></pre>
+glimpse(tree_dat_clean)</code></pre>
+<pre><code>## Rows: 2,782
+## Columns: 16
+## $ No          &lt;int&gt; 126, 11, 12, 2823, 5679, 18, 25, 40, 26, 41, 30, 33, 34, 3…
+## $ Plot        &lt;int&gt; 1, 1, 1, 7, 14, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ Subplot     &lt;chr&gt; &quot;C&quot;, &quot;C&quot;, &quot;C&quot;, &quot;D&quot;, &quot;A&quot;, &quot;C&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;A&quot;, &quot;C&quot;, &quot;C&quot;…
+## $ Species     &lt;chr&gt; &quot;Acer saccharum&quot;, &quot;Quercus alba&quot;, &quot;Quercus rubra&quot;, &quot;Acer s…
+## $ Light_Cat   &lt;chr&gt; &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Low&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;Med&quot;, &quot;M…
+## $ Soil        &lt;chr&gt; &quot;Prunus serotina&quot;, &quot;Quercus rubra&quot;, &quot;Prunus serotina&quot;, &quot;Pr…
+## $ Conspecific &lt;chr&gt; &quot;Heterospecific&quot;, &quot;Heterospecific&quot;, &quot;Heterospecific&quot;, &quot;Het…
+## $ Myco        &lt;chr&gt; &quot;AMF&quot;, &quot;EMF&quot;, &quot;EMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;EMF&quot;, &quot;EMF&quot;, &quot;E…
+## $ SoilMyco    &lt;chr&gt; &quot;AMF&quot;, &quot;EMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;AMF&quot;, &quot;EMF&quot;, &quot;Sterile&quot;…
+## $ AMF         &lt;dbl&gt; 22.00, 15.82, 24.45, 22.23, 21.15, 35.29, 24.00, 4.00, 28.…
+## $ EMF         &lt;dbl&gt; NA, 31.07, 28.19, NA, NA, NA, 20.00, 0.00, 36.18, NA, 28.1…
+## $ Phenolics   &lt;dbl&gt; -0.56, 5.19, 3.36, -0.71, -0.58, 0.30, 5.11, 3.43, 3.83, -…
+## $ Lignin      &lt;dbl&gt; 13.86, 20.52, 24.74, 14.29, 10.85, 10.80, 18.82, 25.22, 26…
+## $ NSC         &lt;dbl&gt; 12.15, 19.29, 15.01, 12.36, 11.20, 13.79, 22.51, 14.81, 14…
+## $ Time        &lt;dbl&gt; 14.0, 115.5, 63.0, 14.0, 14.0, 24.5, 24.5, 24.5, 115.5, 24…
+## $ Event       &lt;chr&gt; &quot;Dead&quot;, &quot;Alive&quot;, &quot;Dead&quot;, &quot;Dead&quot;, &quot;Dead&quot;, &quot;Dead&quot;, &quot;Harvest&quot;…</code></pre>
 </div>
 </div>
 </div>
 <div id="plotting-data" class="section level1">
 <h1>Plotting Data</h1>
 </div>
-<div id="modelling-data" class="section level1">
-<h1>Modelling Data</h1>
+<div id="modeling-data" class="section level1">
+<h1>Modeling Data</h1>
 </div>
 <div id="conclusions" class="section level1">
 <h1>Conclusions</h1>

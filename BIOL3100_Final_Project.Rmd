@@ -34,29 +34,54 @@ and Alma College
 ### Methods/What this Data is
 This experiment was a factorial blocked design field experiment. 4 tree species 7 soil sources and a variety of forest understory light levels were used. There were a total of 3,024 seedlings. Survival was measured twice a week and seedlings were randomly selected each time to measure mycorrhizal colonization, phenolics, lignin, and NSC at 3 weeks. Cox proportional hazards survival models were used to evaluate survival and linear mixed effects models were used to test how light availability and soil source influence traits. 
 
+Column information
 
-
+- No: identification number (total # seeds)
+- Plot: plot tree was planted in (how many plots?)
+- Subplot: subplot tree was planted in (how many subplots?)
+- Species: tree species (list species)
+- Light_ISF: light reading in ISF (range?)
+- Light_Cat: light readings were categorized into 'Low' 'Med' or 'High'
+- Core: year the soil core was taken, either 2016 or 2017
+- Soil: indicates which of the 4 species the soil core was taken from
+- Adult: indicates which adult tree the seed came from (how many adults?)
+- Sterile: indicates whether the soil was steralized or not
+- Conspecific: indicates if soil core each seedling was planted in was taken from it's own
+species (conspecific), a different species (heterospecific) or steralized (sterile)
+- Myco: Myco of the seedling AMF or EMF
+- SoilMyco: Myco of the soil AMF, EMF or Sterile
+- PlantDate: date each tree was planted (how many plant dates?)
+- AMF: 
+- EMF: 
+- Phenolics:
+- Lignin:
+- NSC:
+- Census:?
+- Time: how many days each tree survived
+- Event: indicates whether tree died during the study
+- Harvest: indicates whether tree was harvested during the study
+- Alive: indicates whether tree was alive at the end of the study
 
 ## Original Data {.tabset}
 
 
 ### Output
 
-Preview of original Data
+Preview of Original Data
 
 ```{r original data output, echo=FALSE, include=TRUE}
 tree_dat <- read.csv('Tree_Data.csv')
-head(tree_dat)
+glimpse(tree_dat)
 
 ```
 
 ### R code
 
-Preview of original Data
+Preview of Original Data
 
 ```{r original data r code, echo=TRUE}
 tree_dat <- read.csv('Tree_Data.csv')
-head(tree_dat)
+glimpse(tree_dat)
 
 ```
 
@@ -74,7 +99,13 @@ head(tree_dat)
 
 ### Output
 
-cleaned data has less columns, better for plotting/modeling
+The cleaned data has less columns and is better for plotting/modeling.
+
+- Columns removed: Light_ISF, Core, Sterile, Adult, PlantDate, Census
+
+- Columns 'Event', 'Harvest', and 'Alive' merged into one column called 'Event'
+that indicates whether a tree died, was harvested, or was alive at the end of 
+the study
 ```{r clean data head, echo=FALSE, include=TRUE}
 tree_dat_clean <- tree_dat %>%
   select(-c(Light_ISF, Core, Sterile, Adult, PlantDate, Census)) %>%
@@ -90,13 +121,19 @@ tree_dat_clean <- tree_dat %>%
   drop_na(Status) %>%
   select(-Status)
 
-head(tree_dat_clean)
+glimpse(tree_dat_clean)
 
 ```
 
 ### R code
 
-cleaned data has less columns, better for plotting/modeling
+The cleaned data has less columns and is better for plotting/modeling.
+
+- Columns removed: Light_ISF, Core, Sterile, Adult, PlantDate, Census
+
+- Columns 'Event', 'Harvest', and 'Alive' merged into one column called 'Event'
+that indicates whether a tree died, was harvested, or was alive at the end of 
+the study
 ```{r clean data r code, echo=TRUE}
 tree_dat_clean <- tree_dat %>%
   select(-c(Light_ISF, Core, Sterile, Adult, PlantDate, Census)) %>%
@@ -112,7 +149,7 @@ tree_dat_clean <- tree_dat %>%
   drop_na(Status) %>%
   select(-Status)
 
-head(tree_dat_clean)
+glimpse(tree_dat_clean)
 
 ```
 
@@ -120,6 +157,6 @@ head(tree_dat_clean)
 
 # Plotting Data
 
-# Modelling Data
+# Modeling Data
 
 # Conclusions
