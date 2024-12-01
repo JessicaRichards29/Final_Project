@@ -17,15 +17,18 @@ library(tidyverse)
 # This is my data about trees
 
 ### Source
-link to original authors:
+
+[Original Dataset](./Tree_Data.csv)
+
+Link to original authors:
 https://doi.org/10.5061/dryad.xd2547dpw 
 
-citation:
+Citation:
 Wood, K., Kobe, R., Ibáñez, I., et al. (2023). Tree seedling functional traits
 mediate plant-soil feedback survival responses across a gradient of light
 availability. Dryad. https://doi.org/10.5061/dryad.xd2547dpw
 
-funded by: National Science Foundation: NSF DEB 145732, Michigan State University,
+Funded by: National Science Foundation: NSF DEB 145732, Michigan State University,
 and Alma College
 
 ### Methods/What this Data is
@@ -60,59 +63,58 @@ head(tree_dat)
 
 # Cleaned Data
 
-### Columns cleaned data 
-- Species - 4 species
-- Light_ISF vs Light_Cat, Light_ISF
-- Core
-- Soil
-- Adult
-- Conspecific
-- Myco and SoilMyco
-- PlantDate
-- AMF vs EMF
-- Phenolics
-- Lignin
-- NSC
-- Census vs Time
-- Event vs Harvest vs Alive
-
 ### what do I want in cleaned data set 
-- keep "No"    "Plot"    "Subplot"   "Species"  
-- only keep "Light_Cat"
-- maybe keep "Core"?
 - have only one Soil column with conspecific sterile, species, etc. 
-- maybe keep conspecific?
-- idk what myco and soilmyco are
-- maybe keep adult?
-- probably not plantdate unless relevant
-- Figure out what AMF and EMF are
-- Keep phenolics, lignin, and nsc
-- keep time
-- Change Event, Harvest, and Alive into one column (well really two)
-
-
-
+- maybe combine soil columns?
+- maybe combine myco columns?
+- maybe combing AMF and EMF?
+- maybe combine Phenolics, Lignin, and NSC
 
 ## Cleaned Data {.tabset}
 
-### Plots
+### Output
 
 cleaned data has less columns, better for plotting/modeling
 ```{r clean data head, echo=FALSE, include=TRUE}
+tree_dat_clean <- tree_dat %>%
+  select(-c(Light_ISF, Core, Sterile, Adult, PlantDate, Census)) %>%
+  mutate(Event = case_when(
+    Event == '1' ~ 'X',
+    Event == '0' ~ NA_character_)) %>%
+  pivot_longer(cols = c(Event, Harvest, Alive),
+               names_to = 'Event',
+               values_to = 'Status') %>%
+  mutate(Event = case_when(
+    Event == 'Event' ~ 'Dead',
+    TRUE ~ Event  )) %>%
+  drop_na(Status) %>%
+  select(-Status)
 
-
+head(tree_dat_clean)
 
 ```
 
-### Tables
+### R code
 
 cleaned data has less columns, better for plotting/modeling
 ```{r clean data r code, echo=TRUE}
+tree_dat_clean <- tree_dat %>%
+  select(-c(Light_ISF, Core, Sterile, Adult, PlantDate, Census)) %>%
+  mutate(Event = case_when(
+    Event == '1' ~ 'X',
+    Event == '0' ~ NA_character_)) %>%
+  pivot_longer(cols = c(Event, Harvest, Alive),
+               names_to = 'Event',
+               values_to = 'Status') %>%
+  mutate(Event = case_when(
+    Event == 'Event' ~ 'Dead',
+    TRUE ~ Event  )) %>%
+  drop_na(Status) %>%
+  select(-Status)
 
-
+head(tree_dat_clean)
 
 ```
-
 
 
 
@@ -121,25 +123,3 @@ cleaned data has less columns, better for plotting/modeling
 # Modelling Data
 
 # Conclusions
-
-
-## Results {.tabset}
-
-### Plots
-
-We show a scatter plot in this section.
-
-```{r, fig.dim=c(5, 3)}
-par(mar = c(4, 4, .5, .1))
-plot(mpg ~ hp, data = mtcars, pch = 19)
-```
-
-### Tables
-
-We show the data in this tab.
-
-```{r}
-head(mtcars)
-```
-
-

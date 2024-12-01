@@ -361,11 +361,12 @@ display: none;
 <h1>This is my data about trees</h1>
 <div id="source" class="section level3">
 <h3>Source</h3>
-<p>link to original authors: <a href="https://doi.org/10.5061/dryad.xd2547dpw" class="uri">https://doi.org/10.5061/dryad.xd2547dpw</a></p>
-<p>citation: Wood, K., Kobe, R., Ibáñez, I., et al. (2023). Tree
+<p><a href="./Tree_Data.csv">Original Dataset</a></p>
+<p>Link to original authors: <a href="https://doi.org/10.5061/dryad.xd2547dpw" class="uri">https://doi.org/10.5061/dryad.xd2547dpw</a></p>
+<p>Citation: Wood, K., Kobe, R., Ibáñez, I., et al. (2023). Tree
 seedling functional traits mediate plant-soil feedback survival
 responses across a gradient of light availability. Dryad. <a href="https://doi.org/10.5061/dryad.xd2547dpw" class="uri">https://doi.org/10.5061/dryad.xd2547dpw</a></p>
-<p>funded by: National Science Foundation: NSF DEB 145732, Michigan
+<p>Funded by: National Science Foundation: NSF DEB 145732, Michigan
 State University, and Alma College</p>
 </div>
 <div id="methodswhat-this-data-is" class="section level3">
@@ -437,54 +438,63 @@ head(tree_dat)</code></pre>
 </div>
 <div id="cleaned-data" class="section level1">
 <h1>Cleaned Data</h1>
-<div id="columns-cleaned-data" class="section level3">
-<h3>Columns cleaned data</h3>
-<ul>
-<li>Species - 4 species</li>
-<li>Light_ISF vs Light_Cat, Light_ISF</li>
-<li>Core</li>
-<li>Soil</li>
-<li>Adult</li>
-<li>Conspecific</li>
-<li>Myco and SoilMyco</li>
-<li>PlantDate</li>
-<li>AMF vs EMF</li>
-<li>Phenolics</li>
-<li>Lignin</li>
-<li>NSC</li>
-<li>Census vs Time</li>
-<li>Event vs Harvest vs Alive</li>
-</ul>
-</div>
 <div id="what-do-i-want-in-cleaned-data-set" class="section level3">
 <h3>what do I want in cleaned data set</h3>
 <ul>
-<li>keep “No” “Plot” “Subplot” “Species”<br />
-</li>
-<li>only keep “Light_Cat”</li>
-<li>maybe keep “Core”?</li>
 <li>have only one Soil column with conspecific sterile, species,
 etc.</li>
-<li>maybe keep conspecific?</li>
-<li>idk what myco and soilmyco are</li>
-<li>maybe keep adult?</li>
-<li>probably not plantdate unless relevant</li>
-<li>Figure out what AMF and EMF are</li>
-<li>Keep phenolics, lignin, and nsc</li>
-<li>keep time</li>
-<li>Change Event, Harvest, and Alive into one column (well really
-two)</li>
+<li>maybe combine soil columns?</li>
+<li>maybe combine myco columns?</li>
+<li>maybe combing AMF and EMF?</li>
+<li>maybe combine Phenolics, Lignin, and NSC</li>
 </ul>
 </div>
 <div id="cleaned-data-1" class="section level2 tabset">
 <h2 class="tabset">Cleaned Data</h2>
-<div id="plots" class="section level3">
-<h3>Plots</h3>
+<div id="output-1" class="section level3">
+<h3>Output</h3>
 <p>cleaned data has less columns, better for plotting/modeling</p>
+<pre><code>## # A tibble: 6 × 16
+##      No  Plot Subplot Species   Light_Cat Soil  Conspecific Myco  SoilMyco   AMF
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;
+## 1   126     1 C       Acer sac… Med       Prun… Heterospec… AMF   AMF       22  
+## 2    11     1 C       Quercus … Med       Quer… Heterospec… EMF   EMF       15.8
+## 3    12     1 C       Quercus … Med       Prun… Heterospec… EMF   AMF       24.4
+## 4  2823     7 D       Acer sac… Med       Prun… Heterospec… AMF   AMF       22.2
+## 5  5679    14 A       Acer sac… Low       Prun… Heterospec… AMF   AMF       21.2
+## 6    18     1 C       Prunus s… Med       Acer… Heterospec… AMF   AMF       35.3
+## # ℹ 6 more variables: EMF &lt;dbl&gt;, Phenolics &lt;dbl&gt;, Lignin &lt;dbl&gt;, NSC &lt;dbl&gt;,
+## #   Time &lt;dbl&gt;, Event &lt;chr&gt;</code></pre>
 </div>
-<div id="tables" class="section level3">
-<h3>Tables</h3>
+<div id="r-code-1" class="section level3">
+<h3>R code</h3>
 <p>cleaned data has less columns, better for plotting/modeling</p>
+<pre class="r"><code>tree_dat_clean &lt;- tree_dat %&gt;%
+  select(-c(Light_ISF, Core, Sterile, Adult, PlantDate, Census)) %&gt;%
+  mutate(Event = case_when(
+    Event == &#39;1&#39; ~ &#39;X&#39;,
+    Event == &#39;0&#39; ~ NA_character_)) %&gt;%
+  pivot_longer(cols = c(Event, Harvest, Alive),
+               names_to = &#39;Event&#39;,
+               values_to = &#39;Status&#39;) %&gt;%
+  mutate(Event = case_when(
+    Event == &#39;Event&#39; ~ &#39;Dead&#39;,
+    TRUE ~ Event  )) %&gt;%
+  drop_na(Status) %&gt;%
+  select(-Status)
+
+head(tree_dat_clean)</code></pre>
+<pre><code>## # A tibble: 6 × 16
+##      No  Plot Subplot Species   Light_Cat Soil  Conspecific Myco  SoilMyco   AMF
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;
+## 1   126     1 C       Acer sac… Med       Prun… Heterospec… AMF   AMF       22  
+## 2    11     1 C       Quercus … Med       Quer… Heterospec… EMF   EMF       15.8
+## 3    12     1 C       Quercus … Med       Prun… Heterospec… EMF   AMF       24.4
+## 4  2823     7 D       Acer sac… Med       Prun… Heterospec… AMF   AMF       22.2
+## 5  5679    14 A       Acer sac… Low       Prun… Heterospec… AMF   AMF       21.2
+## 6    18     1 C       Prunus s… Med       Acer… Heterospec… AMF   AMF       35.3
+## # ℹ 6 more variables: EMF &lt;dbl&gt;, Phenolics &lt;dbl&gt;, Lignin &lt;dbl&gt;, NSC &lt;dbl&gt;,
+## #   Time &lt;dbl&gt;, Event &lt;chr&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -496,28 +506,6 @@ two)</li>
 </div>
 <div id="conclusions" class="section level1">
 <h1>Conclusions</h1>
-<div id="results" class="section level2 tabset">
-<h2 class="tabset">Results</h2>
-<div id="plots-1" class="section level3">
-<h3>Plots</h3>
-<p>We show a scatter plot in this section.</p>
-<pre class="r"><code>par(mar = c(4, 4, .5, .1))
-plot(mpg ~ hp, data = mtcars, pch = 19)</code></pre>
-<p><img role="img" src="data:image/png;base64,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" width="480" /></p>
-</div>
-<div id="tables-1" class="section level3">
-<h3>Tables</h3>
-<p>We show the data in this tab.</p>
-<pre class="r"><code>head(mtcars)</code></pre>
-<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
-## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
-</div>
-</div>
 </div>
 
 
