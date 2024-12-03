@@ -15,7 +15,7 @@ library(easystats)
 
 ```
 
-# This is my data about trees
+# Tree Seedling Survival Responses Data
 
 ### Source
 
@@ -25,26 +25,30 @@ Link to original authors:
 https://doi.org/10.5061/dryad.xd2547dpw 
 
 Citation:
-Wood, K., Kobe, R., Ibáñez, I., et al. (2023). Tree seedling functional traits
+Wood, K., Kobe, R., Ibáñez, I., *et al.* (2023). Tree seedling functional traits
 mediate plant-soil feedback survival responses across a gradient of light
 availability. Dryad. https://doi.org/10.5061/dryad.xd2547dpw
 
 Funded by: National Science Foundation: NSF DEB 145732, Michigan State University,
 and Alma College
 
-### Methods/What this Data is
-This experiment was a factorial blocked design field experiment. 4 tree species 7 soil sources and a variety of forest understory light levels were used. There were a total of 3,024 seedlings. Survival was measured twice a week and seedlings were randomly selected each time to measure mycorrhizal colonization, phenolics, lignin, and NSC at 3 weeks. Cox proportional hazards survival models were used to evaluate survival and linear mixed effects models were used to test how light availability and soil source influence traits. 
+### About the data
 
-Column information
+Methods:
+
+This study was a factorial blocked design field experiment. 4 tree species (*Acer saccharum, Prunus serotina, Quercus alba,* and *Quercus rubra*), 7 soil sources (*Acer saccharum, Prunus serotina, Quercus alba, Quercus rubra, Acer rebrum, Populus grandidentata*, and Sterilized) and a variety of forest understory light levels were used. There were a total of 3,024 seedlings in this experiment. Survival was measured twice a week and at 3 weeks, some seedlings were randomly selected to measure mycorrhizal colonization, phenolics, lignin, and NSC. 
+
+
+Column information:
 
 - No: Seedling ID number
 - Plot: Plot the seedling was planted in (1-18)
 - Subplot: Subplot seedling was planted in (A-E, one per corner and one in the middle)
-- Species: Species of seedling (Acer saccharum, Prunus serotina, Quercus alba, and Quercus rubra)
+- Species: Species of seedling (*Acer saccharum, Prunus serotina, Quercus alba*, and *Quercus rubra*)
 - Light_ISF: Light level based on HemiView software.
 - Light_Cat: Light levels were categorized into 'Low' 'Med' or 'High'
 - Core: Year the soil core was taken, either 2016 or 2017
-- Soil: Which species the soil core was taken from. Includes all 4 species as well as Acer rubrum, Populus grandidentata and a sterilized conspecific of each species
+- Soil: Which species the soil core was taken from. Includes all 4 species as well as *Acer rubrum, Populus grandidentata* and a sterilized conspecific of each species
 - Adult: Indicates which adult tree the soil core came from, up to 6 adults per species. 
 - Sterile: Indicates whether the soil was steralized or not
 - Conspecific: Indicates if the soil core used was from it's own species (conspecific), a different species (heterospecific) or steralized (sterile)
@@ -54,13 +58,18 @@ Column information
 - AMF: Measures the percent arbuscular mycorrhizal fungi colonization on fine roots of harvested seedlings
 - EMF: Measures the percent ectomycorrhizal fungi colonization on the root tips of harvested seedlings 
 - Phenolics: Calculated as nmol Gallic acid equivalents per mg dry extract
-- NSC: Calculated as the percent dry mass nonstructural carbohydrates
+- NSC: Calculated as the percent dry mass non-structural carbohydrates
 - Lignin: Measured as percent dry mass lignin
 - Census: The census number when each seedling died or was harvested
 - Time: The number of days before the seedling died or was harvested 
 - Event: Indicates whether the seedling died during the study (1 = dead, 0 = harvested or alive at end of study)
 - Harvest: Indicates whether the seedling was harvested during the study
 - Alive: Indicates whether the seedling was alive at the end of the study
+
+
+Focus for Data Analysis:
+
+The focus for this data analysis will be on how different environmental factors affect the amount of phenolics, lignin, and NSC (non-structural carbohydrates) in seedlings of different tree species. The main factors that will be analyzed are Light_Cat, Soil, Conspecific, Myco, SoilMyco, AMF, and EMF. 
 
 ## Original Data {.tabset}
 
@@ -98,7 +107,7 @@ The cleaned data has less columns and is better for plotting/modeling.
 
 - Columns 'Event', 'Harvest', and 'Alive' merged into one column called 'Event'
 that indicates whether a tree died, was harvested, or was alive at the end of 
-the study
+the study.
 ```{r clean data head, echo=FALSE, include=TRUE}
 tree_dat_clean <- tree_dat %>%
   select(-c(Light_ISF, Core, Sterile, Adult, PlantDate, Census)) %>%
@@ -151,13 +160,16 @@ glimpse(tree_dat_clean)
 
 
 
-
 ## Graph of NSC against Lignin {.tabset}
 
 
 ### Output
 
-Graph of NSC v Lignin with Light category as the color and Survival as the shape. 
+Graph of NSC v Lignin with Light_Cat as the color. 
+
+NSC and Lignin have a positive relationship in *Acer saccharum* and *Prunus serotina*, and it seems like higher light levels result in higher Lignin and NSC levels whereas lower light levels result in lower Lignin and NSC levels. 
+*Quercus alba* and *Quercus rubra* have a negative relationship between NSC and Lignin. 
+
 ```{r NSC v Lignin output, echo=FALSE, include=TRUE}
 tree_dat_clean %>%
   ggplot(aes(x = NSC,
@@ -204,7 +216,8 @@ tree_dat_clean %>%
 Phenolics and AMF have a positive relationship in Prunus serotina, also plants
 in high light category had more AMF and Phenolics levels 
 
-```{AMF v Phenolics output, echo=FALSE, include=TRUE}
+
+```{r AMF v Phenolics output, echo=FALSE, include=TRUE}
 tree_dat_clean %>%
   ggplot(aes(x = AMF,
              y = Phenolics,
