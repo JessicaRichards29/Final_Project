@@ -152,40 +152,6 @@ glimpse(tree_dat_clean)
 
 
 
-
-## Survival Subset {.tabset}
-
-
-### Output
-
-I created a subset of the cleaned data that includes a column of only seedlings 
-that died or were alive at the end of the study. 
-```{r survival subset, echo=FALSE, include=TRUE}
-tree_dat_survival <- tree_dat_clean %>%
-  mutate(Survival = Event) %>%
-  mutate(Survival = case_when(Survival == 'Harvest' ~ NA_character_,
-                   TRUE ~ Survival))
-
-```
-
-### R code
-
-Preview of Original Data
-
-```{r survival subset r code, echo=TRUE}
-tree_dat_survival <- tree_dat_clean %>%
-  mutate(Survival = Event) %>%
-  mutate(Survival = case_when(Survival == 'Harvest' ~ NA_character_,
-                   TRUE ~ Survival))
-
-```
-
-
-
-
-
-
-
 ## Graph of NSC against Lignin {.tabset}
 
 
@@ -193,17 +159,14 @@ tree_dat_survival <- tree_dat_clean %>%
 
 Graph of NSC v Lignin with Light category as the color and Survival as the shape. 
 ```{r NSC v Lignin output, echo=FALSE, include=TRUE}
-tree_dat_survival %>%
-  filter(!is.na(Survival)) %>%
+tree_dat_clean %>%
   ggplot(aes(x = NSC,
              y = Lignin,
-             color = Light_Cat,
-             shape = Survival)) +
+             color = Light_Cat)) +
   geom_point() +
   facet_wrap(~Species, scales = 'free')
 
-tree_dat_survival %>%
-  filter(!is.na(Survival)) %>%
+tree_dat_clean %>%
   ggplot(aes(x = NSC,
              y = Lignin,
              color = Light_Cat)) +
@@ -217,21 +180,168 @@ tree_dat_survival %>%
 Graph of NSC v Lignin
 
 ```{r NSC v Lignin r code, echo=TRUE}
-tree_dat_survival %>%
-  filter(!is.na(Survival)) %>%
+tree_dat_clean %>%
   ggplot(aes(x = NSC,
              y = Lignin,
-             color = Light_Cat,
-             shape = Survival)) +
+             color = Light_Cat)) +
   geom_point() +
   facet_wrap(~Species, scales = 'free')
 
-tree_dat_survival %>%
-  filter(!is.na(Survival)) %>%
+tree_dat_clean %>%
   ggplot(aes(x = NSC,
              y = Lignin,
              color = Light_Cat)) +
   geom_smooth() +
+  facet_wrap(~Species, scales = 'free')
+
+```
+
+## AMF v Phenolics {.tabset}
+
+
+### Output
+
+Phenolics and AMF have a positive relationship in Prunus serotina, also plants
+in high light category had more AMF and Phenolics levels 
+
+```{AMF v Phenolics output, echo=FALSE, include=TRUE}
+tree_dat_clean %>%
+  ggplot(aes(x = AMF,
+             y = Phenolics,
+             color = Light_Cat)) +
+  geom_point() +
+  facet_wrap(~Species, scales = 'free')
+
+```
+
+### R code
+
+Phenolics and AMF have a positive relationship in Prunus serotina, also plants
+in high light category had more AMF and Phenolics levels 
+
+```{r AMF v Phenolics r code, echo=TRUE}
+tree_dat_clean %>%
+  ggplot(aes(x = AMF,
+             y = Phenolics,
+             color = Light_Cat)) +
+  geom_point() +
+  facet_wrap(~Species, scales = 'free')
+
+```
+
+## Phenolics  {.tabset}
+
+
+### Output
+
+Both SoilMyco and Conspecific affect Phenolics for at least one species
+
+```{r Phenolics v SoilMyco and Conspecific output, echo=FALSE, include=TRUE}
+tree_dat_clean %>%
+  ggplot(aes(x = SoilMyco,
+             y = Phenolics,
+             color = SoilMyco)) +
+  geom_boxplot() +
+  facet_wrap(~Species)
+
+
+tree_dat_clean %>%
+  ggplot(aes(x = Conspecific,
+             y = Phenolics,
+             color = Conspecific)) +
+  geom_boxplot() +
+  facet_wrap(~Species)
+
+tree_dat_clean %>%
+  ggplot(aes(x = Soil,
+             y = Phenolics,
+             color = Soil)) +
+  geom_boxplot() +
+  facet_wrap(~Species, scales = 'free')
+```
+
+### R code
+
+Both SoilMyco and Conspecific affect Phenolics for at least one species
+
+```{r Phenolics v SoilMyco and Conspecific r code, echo=TRUE}
+tree_dat_clean %>%
+  ggplot(aes(x = SoilMyco,
+             y = Phenolics,
+             color = SoilMyco)) +
+  geom_boxplot() +
+  facet_wrap(~Species)
+
+
+tree_dat_clean %>%
+  ggplot(aes(x = Conspecific,
+             y = Phenolics,
+             color = Conspecific)) +
+  geom_boxplot() +
+  facet_wrap(~Species)
+
+tree_dat_clean %>%
+  ggplot(aes(x = Soil,
+             y = Phenolics,
+             color = Soil)) +
+  geom_boxplot() +
+  facet_wrap(~Species, scales = 'free')
+```
+
+## Light_Cat and Phenolics, Lignin, and NSC {.tabset}
+
+
+### Output
+
+Light category
+
+```{r Light_Cat output, echo=FALSE, include=TRUE}
+tree_dat_clean %>%
+  ggplot(aes(x = Light_Cat,
+             y = Phenolics,
+             color = Light_Cat)) +
+  geom_jitter() +
+  facet_wrap(~Species, scales = 'free')
+
+tree_dat_clean %>%
+  ggplot(aes(x = Light_Cat,
+             y = Lignin,
+             color = Light_Cat)) +
+  geom_jitter() +
+  facet_wrap(~Species, scales = 'free')
+
+tree_dat_clean %>%
+  ggplot(aes(x = Light_Cat,
+             y = NSC,
+             color = Light_Cat)) +
+  geom_jitter() +
+  facet_wrap(~Species, scales = 'free')
+
+```
+
+### R code
+
+Light category
+```{r Light_Cat r code, echo=TRUE}
+tree_dat_clean %>%
+  ggplot(aes(x = Light_Cat,
+             y = Phenolics,
+             color = Light_Cat)) +
+  geom_jitter() +
+  facet_wrap(~Species, scales = 'free')
+
+tree_dat_clean %>%
+  ggplot(aes(x = Light_Cat,
+             y = Lignin,
+             color = Light_Cat)) +
+  geom_jitter() +
+  facet_wrap(~Species, scales = 'free')
+
+tree_dat_clean %>%
+  ggplot(aes(x = Light_Cat,
+             y = NSC,
+             color = Light_Cat)) +
+  geom_jitter() +
   facet_wrap(~Species, scales = 'free')
 
 ```
@@ -249,19 +359,27 @@ tree_dat_survival %>%
 Choosing a model: model 8 was best
 
 ```{r choosing model output, echo=FALSE, include=TRUE}
-mod1 <-  glm(data = tree_dat_survival, Time ~ Soil + Lignin + NSC + Species)
-mod2 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics )
-mod3 <- glm(data = tree_dat_survival, Time ~ Species + Conspecific * Light_Cat + Phenolics + AMF + SoilMyco)
-mod4 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * Lignin)
-mod5 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * AMF)
-mod6 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * SoilMyco)
-mod7 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * AMF * SoilMyco)
-mod8 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * NSC * Lignin)
+#model for phenolics
+mod1 <- glm(data = tree_dat_clean, Phenolics ~ Conspecific * Species * SoilMyco * AMF * Light_Cat)
+mod2 <- glm(data = tree_dat_clean, Phenolics ~ Conspecific * Species * SoilMyco * Light_Cat)
+mod3 <- glm(data = tree_dat_clean, Phenolics ~ Conspecific * Species * Light_Cat)
 
-compare_performance(mod1, mod2, mod3, mod4, mod5, mod6, mod7, mod8)
-compare_performance(mod1, mod2, mod3, mod4, mod5, mod6, mod7, mod8) %>% plot()
+compare_performance(mod1, mod2, mod3)
 
-best_model <- mod8
+#model for Lignin 
+mod4 <- glm(data = tree_dat_clean, Lignin ~ Conspecific * Species * SoilMyco * Light_Cat)
+mod5 <- glm(data = tree_dat_clean, Lignin ~ Species * SoilMyco * Light_Cat)
+mod6 <- glm(data = tree_dat_clean, Lignin ~ Conspecific * Species * Light_Cat)
+
+compare_performance(mod4, mod5, mod6)
+
+mod7 <- glm(data = tree_dat_clean, NSC ~ Conspecific * Species * SoilMyco * Light_Cat)
+mod8 <- glm(data = tree_dat_clean, NSC ~ Species * SoilMyco * Light_Cat)
+mod9 <- glm(data = tree_dat_clean, NSC ~ Conspecific * Species * Light_Cat)
+mod10 <- glm(data = tree_dat_clean, NSC ~ Conspecific + Species + Light_Cat)
+
+compare_performance(mod7, mod8, mod9, mod10)
+
 
 ```
 
@@ -271,21 +389,27 @@ Choosing a model: model 8 was best
 
 
 ```{r choosing model r code, echo=TRUE}
+#model for phenolics
+mod1 <- glm(data = tree_dat_clean, Phenolics ~ Conspecific * Species * SoilMyco * AMF * Light_Cat)
+mod2 <- glm(data = tree_dat_clean, Phenolics ~ Conspecific * Species * SoilMyco * Light_Cat)
+mod3 <- glm(data = tree_dat_clean, Phenolics ~ Conspecific * Species * Light_Cat)
 
-mod1 <-  glm(data = tree_dat_survival, Time ~ Soil + Lignin + NSC + Species)
-mod2 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics )
-mod3 <- glm(data = tree_dat_survival, Time ~ Species + Conspecific * Light_Cat + Phenolics + AMF + SoilMyco)
-mod4 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * Lignin)
-mod5 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * AMF)
-mod6 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * SoilMyco)
-mod7 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * AMF * SoilMyco)
-mod8 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * NSC * Lignin)
+compare_performance(mod1, mod2, mod3)
 
+#model for Lignin 
+mod4 <- glm(data = tree_dat_clean, Lignin ~ Conspecific * Species * SoilMyco * Light_Cat)
+mod5 <- glm(data = tree_dat_clean, Lignin ~ Species * SoilMyco * Light_Cat)
+mod6 <- glm(data = tree_dat_clean, Lignin ~ Conspecific * Species * Light_Cat)
 
-compare_performance(mod1, mod2, mod3, mod4, mod5, mod6, mod7, mod8)
-compare_performance(mod1, mod2, mod3, mod4, mod5, mod6, mod7, mod8) %>% plot()
+compare_performance(mod4, mod5, mod6)
 
-best_model <- mod8
+mod7 <- glm(data = tree_dat_clean, NSC ~ Conspecific * Species * SoilMyco * Light_Cat)
+mod8 <- glm(data = tree_dat_clean, NSC ~ Species * SoilMyco * Light_Cat)
+mod9 <- glm(data = tree_dat_clean, NSC ~ Conspecific * Species * Light_Cat)
+mod10 <- glm(data = tree_dat_clean, NSC ~ Conspecific + Species + Light_Cat)
+
+compare_performance(mod7, mod8, mod9, mod10)
+
 
 ```
 
