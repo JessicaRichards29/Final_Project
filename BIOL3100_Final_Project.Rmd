@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r load packages, echo=FALSE, include=FALSE}
 library(tidyverse)
+library(easystats)
 
 ```
 
@@ -36,31 +37,30 @@ This experiment was a factorial blocked design field experiment. 4 tree species 
 
 Column information
 
-- No: identification number (total # seeds)
-- Plot: plot tree was planted in (how many plots?)
-- Subplot: subplot tree was planted in (how many subplots?)
-- Species: tree species (list species)
-- Light_ISF: light reading in ISF (range?)
-- Light_Cat: light readings were categorized into 'Low' 'Med' or 'High'
-- Core: year the soil core was taken, either 2016 or 2017
-- Soil: indicates which of the 4 species the soil core was taken from
-- Adult: indicates which adult tree the seed came from (how many adults?)
-- Sterile: indicates whether the soil was steralized or not
-- Conspecific: indicates if soil core each seedling was planted in was taken from it's own
-species (conspecific), a different species (heterospecific) or steralized (sterile)
-- Myco: Myco of the seedling AMF or EMF
-- SoilMyco: Myco of the soil AMF, EMF or Sterile
-- PlantDate: date each tree was planted (how many plant dates?)
-- AMF: 
-- EMF: 
-- Phenolics:
-- Lignin:
-- NSC:
-- Census:?
-- Time: how many days each tree survived
-- Event: indicates whether tree died during the study
-- Harvest: indicates whether tree was harvested during the study
-- Alive: indicates whether tree was alive at the end of the study
+- No: Seedling ID number
+- Plot: Plot the seedling was planted in (1-18)
+- Subplot: Subplot seedling was planted in (A-E, one per corner and one in the middle)
+- Species: Species of seedling (Acer saccharum, Prunus serotina, Quercus alba, and Quercus rubra)
+- Light_ISF: Light level based on HemiView software.
+- Light_Cat: Light levels were categorized into 'Low' 'Med' or 'High'
+- Core: Year the soil core was taken, either 2016 or 2017
+- Soil: Which species the soil core was taken from. Includes all 4 species as well as Acer rubrum, Populus grandidentata and a sterilized conspecific of each species
+- Adult: Indicates which adult tree the soil core came from, up to 6 adults per species. 
+- Sterile: Indicates whether the soil was steralized or not
+- Conspecific: Indicates if the soil core used was from it's own species (conspecific), a different species (heterospecific) or steralized (sterile)
+- Myco: Mycorrhizal type of the seedling (AMF or EMF)
+- SoilMyco: Mycorrhizal type of the soil (AMF, EMF or Sterile)
+- PlantDate: Date each tree was planted 
+- AMF: Measures the percent arbuscular mycorrhizal fungi colonization on fine roots of harvested seedlings
+- EMF: Measures the percent ectomycorrhizal fungi colonization on the root tips of harvested seedlings 
+- Phenolics: Calculated as nmol Gallic acid equivalents per mg dry extract
+- NSC: Calculated as the percent dry mass nonstructural carbohydrates
+- Lignin: Measured as percent dry mass lignin
+- Census: The census number when each seedling died or was harvested
+- Time: The number of days before the seedling died or was harvested 
+- Event: Indicates whether the seedling died during the study (1 = dead, 0 = harvested or alive at end of study)
+- Harvest: Indicates whether the seedling was harvested during the study
+- Alive: Indicates whether the seedling was alive at the end of the study
 
 ## Original Data {.tabset}
 
@@ -87,13 +87,6 @@ glimpse(tree_dat)
 
 
 # Cleaned Data
-
-### what do I want in cleaned data set 
-- have only one Soil column with conspecific sterile, species, etc. 
-- maybe combine soil columns?
-- maybe combine myco columns?
-- maybe combing AMF and EMF?
-- maybe combine Phenolics, Lignin, and NSC
 
 ## Cleaned Data {.tabset}
 
@@ -154,9 +147,150 @@ glimpse(tree_dat_clean)
 ```
 
 
-
 # Plotting Data
 
+
+
+
+
+## Survival Subset {.tabset}
+
+
+### Output
+
+I created a subset of the cleaned data that includes a column of only seedlings 
+that died or were alive at the end of the study. 
+```{r survival subset, echo=FALSE, include=TRUE}
+tree_dat_survival <- tree_dat_clean %>%
+  mutate(Survival = Event) %>%
+  mutate(Survival = case_when(Survival == 'Harvest' ~ NA_character_,
+                   TRUE ~ Survival))
+
+```
+
+### R code
+
+Preview of Original Data
+
+```{r survival subset r code, echo=TRUE}
+tree_dat_survival <- tree_dat_clean %>%
+  mutate(Survival = Event) %>%
+  mutate(Survival = case_when(Survival == 'Harvest' ~ NA_character_,
+                   TRUE ~ Survival))
+
+```
+
+
+
+
+
+
+
+## Graph of NSC against Lignin {.tabset}
+
+
+### Output
+
+Graph of NSC v Lignin with Light category as the color and Survival as the shape. 
+```{r NSC v Lignin output, echo=FALSE, include=TRUE}
+tree_dat_survival %>%
+  filter(!is.na(Survival)) %>%
+  ggplot(aes(x = NSC,
+             y = Lignin,
+             color = Light_Cat,
+             shape = Survival)) +
+  geom_point() +
+  facet_wrap(~Species, scales = 'free')
+
+tree_dat_survival %>%
+  filter(!is.na(Survival)) %>%
+  ggplot(aes(x = NSC,
+             y = Lignin,
+             color = Light_Cat)) +
+  geom_smooth() +
+  facet_wrap(~Species, scales = 'free')
+
+```
+
+### R code
+
+Graph of NSC v Lignin
+
+```{r NSC v Lignin r code, echo=TRUE}
+tree_dat_survival %>%
+  filter(!is.na(Survival)) %>%
+  ggplot(aes(x = NSC,
+             y = Lignin,
+             color = Light_Cat,
+             shape = Survival)) +
+  geom_point() +
+  facet_wrap(~Species, scales = 'free')
+
+tree_dat_survival %>%
+  filter(!is.na(Survival)) %>%
+  ggplot(aes(x = NSC,
+             y = Lignin,
+             color = Light_Cat)) +
+  geom_smooth() +
+  facet_wrap(~Species, scales = 'free')
+
+```
+
+
+
 # Modeling Data
+
+
+## Choosing a Model {.tabset}
+
+
+### Output
+
+Choosing a model: model 8 was best
+
+```{r choosing model output, echo=FALSE, include=TRUE}
+mod1 <-  glm(data = tree_dat_survival, Time ~ Soil + Lignin + NSC + Species)
+mod2 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics )
+mod3 <- glm(data = tree_dat_survival, Time ~ Species + Conspecific * Light_Cat + Phenolics + AMF + SoilMyco)
+mod4 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * Lignin)
+mod5 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * AMF)
+mod6 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * SoilMyco)
+mod7 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * AMF * SoilMyco)
+mod8 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * NSC * Lignin)
+
+compare_performance(mod1, mod2, mod3, mod4, mod5, mod6, mod7, mod8)
+compare_performance(mod1, mod2, mod3, mod4, mod5, mod6, mod7, mod8) %>% plot()
+
+best_model <- mod8
+
+```
+
+### R code
+
+Choosing a model: model 8 was best
+
+
+```{r choosing model r code, echo=TRUE}
+
+mod1 <-  glm(data = tree_dat_survival, Time ~ Soil + Lignin + NSC + Species)
+mod2 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics )
+mod3 <- glm(data = tree_dat_survival, Time ~ Species + Conspecific * Light_Cat + Phenolics + AMF + SoilMyco)
+mod4 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * Lignin)
+mod5 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * AMF)
+mod6 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * SoilMyco)
+mod7 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * AMF * SoilMyco)
+mod8 <- glm(data = tree_dat_survival, Time ~ Species * Conspecific * Light_Cat * Phenolics * NSC * Lignin)
+
+
+compare_performance(mod1, mod2, mod3, mod4, mod5, mod6, mod7, mod8)
+compare_performance(mod1, mod2, mod3, mod4, mod5, mod6, mod7, mod8) %>% plot()
+
+best_model <- mod8
+
+```
+
+
+
+
 
 # Conclusions
