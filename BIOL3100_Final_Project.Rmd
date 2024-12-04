@@ -1,5 +1,5 @@
 ---
-title: "BIOL3100_Final_Project"
+title: "BIOL3100 Final Project"
 author: "Jessica Richards"
 date: "2024-11-30"
 output: html_document
@@ -29,10 +29,14 @@ Wood, K., Kobe, R., Ibáñez, I., *et al.* (2023). Tree seedling functional trai
 mediate plant-soil feedback survival responses across a gradient of light
 availability. Dryad. https://doi.org/10.5061/dryad.xd2547dpw
 
-Funded by: National Science Foundation: NSF DEB 145732, Michigan State University,
+Study Funded by: National Science Foundation: NSF DEB 145732, Michigan State University,
 and Alma College
 
 ### About the data
+
+Introduction to Data:
+
+The purpose of the study was to see how  functional traits mediate plant-soil feedbacks (PSFs) via seedling survival. 
 
 Methods:
 
@@ -69,7 +73,7 @@ Column information:
 
 Focus for Data Analysis:
 
-The focus for this data analysis will be on how different environmental factors affect the amount of phenolics, lignin, and NSC (non-structural carbohydrates) in seedlings of different tree species. The main factors that will be analyzed are Light_Cat, Soil, Conspecific, Myco, SoilMyco, AMF, and EMF. 
+The focus for this data analysis will be on how different environmental factors affect the amount of phenolics, lignin, and NSC (non-structural carbohydrates) in seedlings of different tree species. The main factors that will be analyzed are Light_Cat, Soil, Conspecific, SoilMyco, AMF, and EMF. 
 
 ## Original Data {.tabset}
 
@@ -160,15 +164,14 @@ glimpse(tree_dat_clean)
 
 
 
-## Graph of NSC against Lignin {.tabset}
+## NSC against Lignin with Light_Cat as color {.tabset}
 
 
 ### Output
 
-Graph of NSC v Lignin with Light_Cat as the color. 
+In *Acer saccharum* and *Prunus serotina*, NSC and Lignin have a positive relationship. High and Med light levels seem to result in higher levels of both NSC and Lignin compared to Low light levels. 
 
-NSC and Lignin have a positive relationship in *Acer saccharum* and *Prunus serotina*, and it seems like higher light levels result in higher Lignin and NSC levels whereas lower light levels result in lower Lignin and NSC levels. 
-*Quercus alba* and *Quercus rubra* have a negative relationship between NSC and Lignin. 
+In *Quercus alba* and *Quercus rubra*, NSC and Lignin have a negative relationship. While NSC and Lignin levels are comparable across light levels in *Q. alba*, it seems that low light levels in *Q. rubra*may be associated with lower levels of NSC. 
 
 ```{r NSC v Lignin output, echo=FALSE, include=TRUE}
 tree_dat_clean %>%
@@ -176,20 +179,18 @@ tree_dat_clean %>%
              y = Lignin,
              color = Light_Cat)) +
   geom_point() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') + 
+  theme_minimal() +
+  ggtitle('NSC v Lignin')
 
-tree_dat_clean %>%
-  ggplot(aes(x = NSC,
-             y = Lignin,
-             color = Light_Cat)) +
-  geom_smooth() +
-  facet_wrap(~Species, scales = 'free')
 
 ```
 
 ### R code
 
-Graph of NSC v Lignin
+In *Acer saccharum* and *Prunus serotina*, NSC and Lignin have a positive relationship. High and Med light levels seem to result in higher levels of both NSC and Lignin compared to Low light levels. 
+
+In *Quercus alba* and *Quercus rubra*, NSC and Lignin have a negative relationship. While NSC and Lignin levels are comparable across light levels in *Q. alba*, it seems that low light levels in *Q. rubra*may be associated with lower levels of NSC. 
 
 ```{r NSC v Lignin r code, echo=TRUE}
 tree_dat_clean %>%
@@ -197,25 +198,21 @@ tree_dat_clean %>%
              y = Lignin,
              color = Light_Cat)) +
   geom_point() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') + 
+  theme_minimal() +
+  ggtitle('NSC v Lignin')
 
-tree_dat_clean %>%
-  ggplot(aes(x = NSC,
-             y = Lignin,
-             color = Light_Cat)) +
-  geom_smooth() +
-  facet_wrap(~Species, scales = 'free')
 
 ```
 
-## AMF v Phenolics {.tabset}
+## Phenolics against AMF with Light_Cat as color {.tabset}
 
 
 ### Output
 
-Phenolics and AMF have a positive relationship in Prunus serotina, also plants
-in high light category had more AMF and Phenolics levels 
+Percent dry mass Phenolics and percent AMF have a positive relationship in *Prunus serotina*. 
 
+There also seems to be a trend of higher light categories having a higher percentage of Phenolics. 
 
 ```{r AMF v Phenolics output, echo=FALSE, include=TRUE}
 tree_dat_clean %>%
@@ -223,14 +220,17 @@ tree_dat_clean %>%
              y = Phenolics,
              color = Light_Cat)) +
   geom_point() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+  theme_minimal() +
+  ggtitle('AMF v Phenolics')
 
 ```
 
 ### R code
 
-Phenolics and AMF have a positive relationship in Prunus serotina, also plants
-in high light category had more AMF and Phenolics levels 
+Percent dry mass Phenolics and percent AMF have a positive relationship in *Prunus serotina*. 
+
+There also seems to be a trend of higher light categories having a higher percentage of Phenolics. 
 
 ```{r AMF v Phenolics r code, echo=TRUE}
 tree_dat_clean %>%
@@ -238,75 +238,57 @@ tree_dat_clean %>%
              y = Phenolics,
              color = Light_Cat)) +
   geom_point() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+  theme_minimal() +
+  ggtitle('AMF v Phenolics')
 
 ```
 
-## Phenolics  {.tabset}
+## Phenolics against SoilMyco  {.tabset}
 
 
 ### Output
 
-Both SoilMyco and Conspecific affect Phenolics for at least one species
+*Q. alba* seems to have lower Phenolic levels when in sterilized soil compared to soils with AMF or EMF. *P. serotina* also seems to have lower levels of Phenolics in sterilized soils.
 
-```{r Phenolics v SoilMyco and Conspecific output, echo=FALSE, include=TRUE}
+```{r Phenolics Trends output, echo=FALSE, include=TRUE}
+
 tree_dat_clean %>%
   ggplot(aes(x = SoilMyco,
              y = Phenolics,
              color = SoilMyco)) +
   geom_boxplot() +
-  facet_wrap(~Species)
+  facet_wrap(~Species, scales = 'free') +
+  theme_minimal() +
+  ggtitle('Phenolics v SoilMyco')
 
-
-tree_dat_clean %>%
-  ggplot(aes(x = Conspecific,
-             y = Phenolics,
-             color = Conspecific)) +
-  geom_boxplot() +
-  facet_wrap(~Species)
-
-tree_dat_clean %>%
-  ggplot(aes(x = Soil,
-             y = Phenolics,
-             color = Soil)) +
-  geom_boxplot() +
-  facet_wrap(~Species, scales = 'free')
 ```
 
 ### R code
 
-Both SoilMyco and Conspecific affect Phenolics for at least one species
+*Q. alba* seems to have lower Phenolic levels when in sterilized soil compared to soils with AMF or EMF. *P. serotina* also seems to have lower levels of Phenolics in sterilized soil.
 
-```{r Phenolics v SoilMyco and Conspecific r code, echo=TRUE}
+```{r Phenolics Trends r code, echo=TRUE}
+
 tree_dat_clean %>%
   ggplot(aes(x = SoilMyco,
              y = Phenolics,
              color = SoilMyco)) +
   geom_boxplot() +
-  facet_wrap(~Species)
+  facet_wrap(~Species, scales = 'free') +
+  theme_minimal() +
+  ggtitle('Phenolics v SoilMyco')
 
-
-tree_dat_clean %>%
-  ggplot(aes(x = Conspecific,
-             y = Phenolics,
-             color = Conspecific)) +
-  geom_boxplot() +
-  facet_wrap(~Species)
-
-tree_dat_clean %>%
-  ggplot(aes(x = Soil,
-             y = Phenolics,
-             color = Soil)) +
-  geom_boxplot() +
-  facet_wrap(~Species, scales = 'free')
 ```
 
-## Light_Cat and Phenolics, Lignin, and NSC {.tabset}
+## Light_Cat against Phenolics, Lignin, and NSC {.tabset}
 
 
 ### Output
 
-Light category
+*A. saccharum, P. serotina* and *Q. alba* seem to have higher levels of Phenolics with more higher light. Q. rubra only seems to have higher Phenolic levels in the High light category and the difference is not as dramatic as it is in the other 3 species. 
+
+*P. serotina* seems to have higher levels of both Lignin and NSC when in High and Med light categories. Relationships between Light_Cat and Lignin and Light_Cat and NSC are more difficult to see in the other 3 species. 
 
 ```{r Light_Cat output, echo=FALSE, include=TRUE}
 tree_dat_clean %>%
@@ -314,54 +296,75 @@ tree_dat_clean %>%
              y = Phenolics,
              color = Light_Cat)) +
   geom_jitter() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+  theme_minimal() +
+    ggtitle('Phenolics v Light_Cat')
+
 
 tree_dat_clean %>%
   ggplot(aes(x = Light_Cat,
              y = Lignin,
              color = Light_Cat)) +
   geom_jitter() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+    theme_minimal() +
+    ggtitle('Lignin v Light_Cat')
 
 tree_dat_clean %>%
   ggplot(aes(x = Light_Cat,
              y = NSC,
              color = Light_Cat)) +
   geom_jitter() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+    theme_minimal() +
+    ggtitle('NSC v Light_Cat')
 
 ```
 
 ### R code
 
-Light category
+*A. saccharum, P. serotina* and *Q. alba* seem to have higher levels of Phenolics with more higher light. Q. rubra only seems to have higher Phenolic levels in the High light category and the difference is not as dramatic as it is in the other 3 species. 
+
+*P. serotina* seems to have higher levels of both Lignin and NSC when in High and Med light categories. Relationships between Light_Cat and Lignin and Light_Cat and NSC are more difficult to see in the other 3 species. 
+
+
 ```{r Light_Cat r code, echo=TRUE}
 tree_dat_clean %>%
   ggplot(aes(x = Light_Cat,
              y = Phenolics,
              color = Light_Cat)) +
   geom_jitter() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+  theme_minimal() +
+    ggtitle('Phenolics v Light_Cat')
+
 
 tree_dat_clean %>%
   ggplot(aes(x = Light_Cat,
              y = Lignin,
              color = Light_Cat)) +
   geom_jitter() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+    theme_minimal() +
+    ggtitle('Lignin v Light_Cat')
 
 tree_dat_clean %>%
   ggplot(aes(x = Light_Cat,
              y = NSC,
              color = Light_Cat)) +
   geom_jitter() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+    theme_minimal() +
+    ggtitle('NSC v Light_Cat')
 
 ```
 
+# Statistical Methods
 
+idk if we're gonna do this or not
 
 # Modeling Data
+
 
 
 ## Choosing a Model {.tabset}
