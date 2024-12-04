@@ -1,6 +1,5 @@
 ---
-title: "Final_Project_rough_draft"
-author: "Jessica Richards"
+title: "Jessica Richards"
 date: "2024-11-21"
 output: html_document
 ---
@@ -11,5 +10,5 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## [BIOL-3100-Final-Project](./BIOL3100_Final_Project.html)##
 
-
+## Jessica Richards - Biology and Biochemistry Major at UVU
 

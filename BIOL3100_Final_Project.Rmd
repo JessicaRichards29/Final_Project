@@ -369,7 +369,9 @@ tree_dat_clean %>%
 
 ### Output
 
-Choosing a model: model 8 was best
+The original plan was to make a model for predicting phenolics, a model for prediction lignin, and a model for predicting NSC, but the models for lignin and NSC had very high AIC values. This means that they likely aren't a good fit for the data and won't be very good at predicting values. 
+
+The model for phenolics has a very high R-squared and a relatively low AIC meaning that it is a relatively good model. It predicts phenolics based on the interactions between Conspecific, Species, SoilMyco, AMF and Light_Cat. 
 
 ```{r choosing model output, echo=FALSE, include=TRUE}
 #model for phenolics
@@ -386,6 +388,7 @@ mod6 <- glm(data = tree_dat_clean, Lignin ~ Conspecific * Species * Light_Cat)
 
 compare_performance(mod4, mod5, mod6)
 
+#model for NSC
 mod7 <- glm(data = tree_dat_clean, NSC ~ Conspecific * Species * SoilMyco * Light_Cat)
 mod8 <- glm(data = tree_dat_clean, NSC ~ Species * SoilMyco * Light_Cat)
 mod9 <- glm(data = tree_dat_clean, NSC ~ Conspecific * Species * Light_Cat)
@@ -398,7 +401,9 @@ compare_performance(mod7, mod8, mod9, mod10)
 
 ### R code
 
-Choosing a model: model 8 was best
+The original plan was to make a model for predicting phenolics, a model for prediction lignin, and a model for predicting NSC, but the models for lignin and NSC had very high AIC values. This means that they likely aren't a good fit for the data and won't be very good at predicting values. 
+
+The model for phenolics has a very high R-squared and a relatively low AIC meaning that it is a relatively good model. It predicts phenolics based on the interactions between Conspecific, Species, SoilMyco, AMF and Light_Cat. 
 
 
 ```{r choosing model r code, echo=TRUE}
@@ -416,6 +421,7 @@ mod6 <- glm(data = tree_dat_clean, Lignin ~ Conspecific * Species * Light_Cat)
 
 compare_performance(mod4, mod5, mod6)
 
+#model for NSC
 mod7 <- glm(data = tree_dat_clean, NSC ~ Conspecific * Species * SoilMyco * Light_Cat)
 mod8 <- glm(data = tree_dat_clean, NSC ~ Species * SoilMyco * Light_Cat)
 mod9 <- glm(data = tree_dat_clean, NSC ~ Conspecific * Species * Light_Cat)
