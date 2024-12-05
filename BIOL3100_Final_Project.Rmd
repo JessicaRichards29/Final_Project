@@ -13,7 +13,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(easystats)
 library(modelr)
-library(shiny)
 
 ```
 
@@ -77,7 +76,7 @@ Column information:
 
 ### Focus for Data Analysis
 
-The focus for this data analysis will be on how different environmental factors affect the amount of phenolics, lignin, and NSC (non-structural carbohydrates) in seedlings of different tree species. The main factors that will be analyzed are Light_Cat, Soil, Conspecific, SoilMyco, AMF, and EMF. 
+The focus for this data analysis will be on how different environmental factors affect the amount of phenolics, lignin, and NSC (non-structural carbohydrates) in seedlings of different tree species. The main factors that will be analyzed are Light_Cat, Conspecific, SoilMyco, AMF and EMF. 
 
 ## Original Data {.tabset}
 
@@ -194,7 +193,7 @@ tree_dat_clean %>%
 
 In *Acer saccharum* and *Prunus serotina*, NSC and Lignin have a positive relationship. High and Med light levels seem to result in higher levels of both NSC and Lignin compared to Low light levels. 
 
-In *Quercus alba* and *Quercus rubra*, NSC and Lignin have a negative relationship. While NSC and Lignin levels are comparable across light levels in *Q. alba*, it seems that low light levels in *Q. rubra*may be associated with lower levels of NSC. 
+In *Quercus alba* and *Quercus rubra*, NSC and Lignin have a negative relationship. While NSC and Lignin levels are comparable across light levels in *Q. alba*, it seems that low light levels in *Q. rubra* may be associated with lower levels of NSC. 
 
 ```{r NSC v Lignin r code, echo=TRUE}
 tree_dat_clean %>%
@@ -270,7 +269,7 @@ tree_dat_clean %>%
 
 ### R code
 
-*Q. alba* seems to have lower Phenolic levels when in sterilized soil compared to soils with AMF or EMF. *P. serotina* also seems to have lower levels of Phenolics in sterilized soil.
+*Q. alba* seems to have lower Phenolic levels when in sterilized soil compared to soils with AMF or EMF. *P. serotina* also seems to have lower levels of Phenolics in sterilized soils.
 
 ```{r Phenolics Trends r code, echo=TRUE}
 
@@ -363,12 +362,7 @@ tree_dat_clean %>%
 
 ```
 
-# Statistical Methods
-
-idk if we're gonna do this or not
-
 # Modeling Data
-
 
 
 ## Choosing a Model {.tabset}
@@ -376,7 +370,7 @@ idk if we're gonna do this or not
 
 ### Output
 
-I created 3 models, one to predict Phenolics, one to predict Lignin, and one to predict NSC. Through testing various models, I came to the conclusion that the formula for the best model was to predict the dependent variable (Phenolics, Lignin, or NSC) based on the interaction of Conspecific, Species, SoilMyco, and Light_Cat. (check r code for more info on models)
+I created 3 models, one to predict Phenolics, one to predict Lignin, and one to predict NSC. Through testing various models, I came to the conclusion that the best formula predicted the dependent variable (Phenolics, Lignin, or NSC) based on the interaction of Conspecific, Species, SoilMyco, and Light_Cat. (check r code for more info on models)
 
 These are represented as mod1 for Phenolics, mod4 for Lignin, and mod7 for NSC.
 
@@ -412,9 +406,10 @@ compare_performance(mod7, mod8, mod9, mod10)
 
 ### R code
 
-I created 3 models, one to predict Phenolics, one to predict Lignin, and one to predict NSC. Through testing various models, I came to the conclusion that the formula for the best model was to predict the dependent variable (Phenolics, Lignin, or NSC) based on the interaction of Conspecific, Species, SoilMyco, and Light_Cat. (check r code for more info on models)
+I created 3 models, one to predict Phenolics, one to predict Lignin, and one to predict NSC. Through testing various models, I came to the conclusion that the best formula predicted the dependent variable (Phenolics, Lignin, or NSC) based on the interaction of Conspecific, Species, SoilMyco, and Light_Cat. (check r code for more info on models)
 
 These are represented as mod1 for Phenolics, mod4 for Lignin, and mod7 for NSC.
+
 
 The model for Phenolics was the most accurate out of the three as it had the highest r-squared and a relatively low AIC. The models for Lignin and NSC had pretty good r-squared values but also had very high AIC values, meaning they likely won't be as good at predicting values.
 
@@ -450,9 +445,13 @@ compare_performance(mod7, mod8, mod9, mod10)
 
 ### Output
 
-For predictive modeling of Phenolics in tree seedlings, I first created a dataframe from my clean data (tree_dat_clean) that included predictions based on my chosen model. A preview of these predictions can be seen below. While not perfect, the predictions do match up relatively well. 
+For predictive modeling of Phenolics in tree seedlings, I first created a dataframe from my clean data (tree_dat_clean) that included predictions based on my chosen model (mod1). A preview of these predictions can be seen below. While not perfect, the predictions do match up relatively well. 
 
-I then created a new dataframe with 4 columns: Conspecific, Species, SoilMyco and Light_Cat
+Through a series of dataframes and predictions, I predicted Phenolic levels for a new dataframe and plotted these predictions against the real data. For more specific information on how I did this, you can look at the r code. 
+
+In the first graph, we can see that the predicted values from the new dataframe line up fairly well with the actual data. This is especially clear in *Q. alba* where the predicted values fall pretty close to the center of the different groups. We can also see the relationships between Phenolics, Light_Cat and Conspecific quite well. *P. serotina* and *Q. alba* don't do as well in sterile soil across all light categories, and *Q. alba* seems to do consistently best in conspecific soils. 
+
+In the second graph we see the same relationships between Phenolics and Light_Cat but we also see SoilMyco's relationship with Phenolics. It looks like *Q. alba* has high Phenolic levels in EMF soils, slightly less in AMF soils and relatively low levels in Sterile soils. Sterile soils don't seem to affect *Q. rubra's* Phenolic levels very much unless it's in a Low light category. *P. serotina* follows a similar trend to *Q. alba*, but this is confusing because *P. serotina* is categorized as an AMF in the Myco column. It would be expected that it would have higher Phenolic levels in AMF soils. 
 
 ```{r phenolics modeling output, echo=FALSE, include=TRUE}
 df_phenolics <- tree_dat_clean %>% 
@@ -484,31 +483,29 @@ ggplot(fullpreds_phenolics,aes(x=Light_Cat,y=pred, shape  = Conspecific)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = Phenolics, color = Conspecific), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+      ggtitle('Light_Cat v Predicted Phenolics v Conspecific')
+
 
 ggplot(fullpreds_phenolics,aes(x=Light_Cat,y=pred, shape  = SoilMyco)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = Phenolics, color = SoilMyco), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+      ggtitle('Light_Cat v Predicted Phenolics v SoilMyco')
 
-ggplot(fullpreds_phenolics,aes(x=SoilMyco,y=pred, shape  = Light_Cat)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = Phenolics, color = Light_Cat), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
-
-ggplot(fullpreds_phenolics,aes(x=Conspecific,y=pred, shape  = Light_Cat)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = Phenolics, color = Light_Cat), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
 
 ```
 
 ### R code
 
-Preview of Original Data
+For predictive modeling of Phenolics in tree seedlings, I first created a dataframe from my clean data (tree_dat_clean) that included predictions based on my chosen model (mod1). A preview of these predictions can be seen below. While not perfect, the predictions do match up relatively well. 
+
+Through a series of dataframes and predictions, I predicted Phenolic levels for a new dataframe and plotted these predictions against the real data. For more specific information on how I did this, you can look at the r code. 
+
+In the first graph, we can see that the predicted values from the new dataframe line up fairly well with the actual data. This is especially clear in *Q. alba* where the predicted values fall pretty close to the center of the different groups. We can also see the relationships between Phenolics, Light_Cat and Conspecific quite well. *P. serotina* and *Q. alba* don't do as well in sterile soil across all light categories, and *Q. alba* seems to do consistently best in conspecific soils. 
+
+In the second graph we see the same relationships between Phenolics and Light_Cat but we also see SoilMyco's relationship with Phenolics. It looks like *Q. alba* has high Phenolic levels in EMF soils, slightly less in AMF soils and relatively low levels in Sterile soils. Sterile soils don't seem to affect *Q. rubra's* Phenolic levels very much unless it's in a Low light category. *P. serotina* follows a similar trend to *Q. alba*, but this is confusing because *P. serotina* is categorized as an AMF in the Myco column. It would be expected that it would have higher Phenolic levels in AMF soils. 
 
 ```{r phenolics modeling r code, echo=TRUE}
 df_phenolics <- tree_dat_clean %>% 
@@ -538,25 +535,16 @@ ggplot(fullpreds_phenolics,aes(x=Light_Cat,y=pred, shape  = Conspecific)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = Phenolics, color = Conspecific), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+      ggtitle('Light_Cat v Predicted Phenolics v Conspecific')
+
 
 ggplot(fullpreds_phenolics,aes(x=Light_Cat,y=pred, shape  = SoilMyco)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = Phenolics, color = SoilMyco), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
-
-ggplot(fullpreds_phenolics,aes(x=SoilMyco,y=pred, shape  = Light_Cat)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = Phenolics, color = Light_Cat), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
-
-ggplot(fullpreds_phenolics,aes(x=Conspecific,y=pred, shape  = Light_Cat)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = Phenolics, color = Light_Cat), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+      ggtitle('Light_Cat v Predicted Phenolics v SoilMyco')
 
 ```
 
@@ -567,7 +555,11 @@ ggplot(fullpreds_phenolics,aes(x=Conspecific,y=pred, shape  = Light_Cat)) +
 
 ### Output
 
-Preview of Original Data
+The predictive modeling for Lignin used the same process as for Phenolics, but instead I used mod4. A preview of the predictions can be seen below. The predictions for Lignin also match up fairly well. 
+
+Once again the r code is available for more details on this process. 
+
+Graph 1?
 
 ```{r lignin modeling output, echo=FALSE, include=TRUE}
 df_lignin <- tree_dat_clean %>% 
@@ -587,35 +579,32 @@ hyp_preds_lignin$PredictionType <- "Hypothetical"
 
 fullpreds_lignin <- full_join(df_lignin,hyp_preds_lignin)
 
+
 ggplot(fullpreds_lignin,aes(x=Light_Cat,y=pred, shape  = Conspecific)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = Lignin, color = Conspecific), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
-
-ggplot(fullpreds_lignin,aes(x=Light_Cat,y=pred, shape  = SoilMyco)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = Lignin, color = SoilMyco), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+        ggtitle('Light_Cat v Predicted Lignin v Conspecific')
 
 ggplot(fullpreds_lignin,aes(x=SoilMyco,y=pred, shape  = Light_Cat)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = Lignin, color = Light_Cat), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+        ggtitle('SoilMyco v Predicted Lignin v Light_Cat')
 
-ggplot(fullpreds_lignin,aes(x=Conspecific,y=pred, shape  = Light_Cat)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = Lignin, color = Light_Cat), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+
 
 ```
 
 ### R code
 
-Preview of Original Data
+The predictive modeling for Lignin used the same process as for Phenolics, but instead I used mod4. A preview of the predictions can be seen below. The predictions for Lignin also match up fairly well. 
+
+Once again the r code is available for more details on this process. 
+
+Graph 1?
 
 ```{r lignin modeling r code, echo=TRUE}
 df_lignin <- tree_dat_clean %>% 
@@ -635,29 +624,20 @@ hyp_preds_lignin$PredictionType <- "Hypothetical"
 
 fullpreds_lignin <- full_join(df_lignin,hyp_preds_lignin)
 
+
 ggplot(fullpreds_lignin,aes(x=Light_Cat,y=pred, shape  = Conspecific)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = Lignin, color = Conspecific), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
-
-ggplot(fullpreds_lignin,aes(x=Light_Cat,y=pred, shape  = SoilMyco)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = Lignin, color = SoilMyco), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+        ggtitle('Light_Cat v Predicted Lignin v Conspecific')
 
 ggplot(fullpreds_lignin,aes(x=SoilMyco,y=pred, shape  = Light_Cat)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = Lignin, color = Light_Cat), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
-
-ggplot(fullpreds_lignin,aes(x=Conspecific,y=pred, shape  = Light_Cat)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = Lignin, color = Light_Cat), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+        ggtitle('SoilMyco v Predicted Lignin v Light_Cat')
 
 ```
 
@@ -668,7 +648,10 @@ ggplot(fullpreds_lignin,aes(x=Conspecific,y=pred, shape  = Light_Cat)) +
 
 ### Output
 
-Preview of Original Data
+The predictive modeling for NSC used the same process as for Phenolics and Lignin, but instead I used mod7. A preview of the predictions can be seen below. The predictions for NSC also match up quite well with the real values. 
+
+Once again the r code is available for more details on this process.
+
 
 ```{r NSC modeling output, echo=FALSE, include=TRUE}
 df_NSC <- tree_dat_clean %>% 
@@ -688,35 +671,30 @@ hyp_preds_NSC$PredictionType <- "Hypothetical"
 
 fullpreds_NSC <- full_join(df_NSC,hyp_preds_NSC)
 
-ggplot(fullpreds_NSC,aes(x=Light_Cat,y=pred, shape  = Conspecific)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = NSC, color = Conspecific), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
-
 ggplot(fullpreds_NSC,aes(x=Light_Cat,y=pred, shape  = SoilMyco)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = NSC, color = SoilMyco), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
-
-ggplot(fullpreds_NSC,aes(x=SoilMyco,y=pred, shape  = Light_Cat)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = NSC, color = Light_Cat), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+        ggtitle('Light_Cat v Predicted NSC v SoilMyco')
 
 ggplot(fullpreds_NSC,aes(x=Conspecific,y=pred, shape  = Light_Cat)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = NSC, color = Light_Cat), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+          ggtitle('Conspecific v Predicted NSC v Light_Cat')
+
 
 ```
 
 ### R code
 
-Preview of Original Data
+
+The predictive modeling for NSC used the same process as for Phenolics and Lignin, but instead I used mod7. A preview of the predictions can be seen below. The predictions for NSC also match up quite well with the real values. 
+
+Once again the r code is available for more details on this process.
+
 
 ```{r NSC modeling r code, echo=TRUE}
 df_NSC <- tree_dat_clean %>% 
@@ -736,29 +714,20 @@ hyp_preds_NSC$PredictionType <- "Hypothetical"
 
 fullpreds_NSC <- full_join(df_NSC,hyp_preds_NSC)
 
-ggplot(fullpreds_NSC,aes(x=Light_Cat,y=pred, shape  = Conspecific)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = NSC, color = Conspecific), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
 
 ggplot(fullpreds_NSC,aes(x=Light_Cat,y=pred, shape  = SoilMyco)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = NSC, color = SoilMyco), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
-
-ggplot(fullpreds_NSC,aes(x=SoilMyco,y=pred, shape  = Light_Cat)) +
-  geom_point(size = 2) +
-  geom_jitter(aes(y = NSC, color = Light_Cat), alpha = .5) +
-  theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+        ggtitle('Light_Cat v Predicted NSC v SoilMyco')
 
 ggplot(fullpreds_NSC,aes(x=Conspecific,y=pred, shape  = Light_Cat)) +
   geom_point(size = 2) +
   geom_jitter(aes(y = NSC, color = Light_Cat), alpha = .5) +
   theme_minimal() +
-  facet_wrap(~Species, scales = 'free')
+  facet_wrap(~Species, scales = 'free') +
+          ggtitle('Conspecific v Predicted NSC v Light_Cat')
 
 ```
 
@@ -769,4 +738,6 @@ https://t6syzy-jessica-richards.shinyapps.io/shiny_app_stuff/
 
 # Conclusions
 
-I've come to the conclusion that i hate this class. 
+Alright here's the deal...
+
+
