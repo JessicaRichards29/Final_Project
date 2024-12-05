@@ -749,6 +749,7 @@ https://t6syzy-jessica-richards.shinyapps.io/shiny_app_stuff/
 
 # Conclusions
 
-Alright here's the deal...
+Based on the plots and models, the largest factors in determining Phenolics, Lignin, and NSC were Species and Light_Cat. High and Med light categories are associated with higher levels of Phenolics in *A. saccharum*, *P. serotina*, and *Q. alba*. High and Med light categories were also associated with higher levels of Lignin and NSC in *P. serotina*. 
 
+Other less influential factors were Conspecific, SoilMyco, and AMF. *P. serotina* showed a positive relationship between Phenolic levels and AMF levels. *P. serotina* and *Q. alba* had lower phenolic levels in sterilized soils, they may have also showed lower Lignin and NSC levels in sterilized soils but the relationship was less clear. *Q. alba* also higher Phenolic levels in conspecific soils and soils with EMF. Interestingly, *P. serontina* had higher Phenolic levels in heterospecific soils and soils with EMF even though the Myco of *P. serontina* is AMF. 
 
