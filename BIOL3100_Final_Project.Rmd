@@ -559,7 +559,9 @@ The predictive modeling for Lignin used the same process as for Phenolics, but i
 
 Once again the r code is available for more details on this process. 
 
-Graph 1?
+In the first graph, the predictions fit the data relatively well, but since the relationships for Lignin weren't as clearly defined, the predictions don't fit as well as they did for Phenolics. For *Q. alba*, there seems to be higher lignin levels in Conspecific soil when compared to Heterospecific and Sterilized soils. In *P. serotina*, seedlings in the High and Med light categories show much higher Lignin levels than seedlings in the Low light category. 
+
+In the second graph *A. saccharum* and *Q. alba* both seem to have lower Lignin levels in Sterile soils. *P. serotina* once again shows lower Lignin levels in Low light, but this graph makes it more clear that *A. saccharum* also seems to have lower Lignin levels in Low light. Since the rest of the data is rather mixed, the predictions don't seem to track the data very well. 
 
 ```{r lignin modeling output, echo=FALSE, include=TRUE}
 df_lignin <- tree_dat_clean %>% 
@@ -604,7 +606,9 @@ The predictive modeling for Lignin used the same process as for Phenolics, but i
 
 Once again the r code is available for more details on this process. 
 
-Graph 1?
+In the first graph, the predictions fit the data relatively well, but since the relationships for Lignin weren't as clearly defined, the predictions don't fit as well as they did for Phenolics. For *Q. alba*, there seems to be higher lignin levels in Conspecific soil when compared to Heterospecific and Sterilized soils. In *P. serotina*, seedlings in the High and Med light categories show much higher Lignin levels than seedlings in the Low light category. 
+
+In the second graph *A. saccharum* and *Q. alba* both seem to have lower Lignin levels in Sterile soils. *P. serotina* once again shows lower Lignin levels in Low light, but this graph makes it more clear that *A. saccharum* also seems to have lower Lignin levels in Low light. Since the rest of the data is rather mixed, the predictions don't seem to track the data very well. 
 
 ```{r lignin modeling r code, echo=TRUE}
 df_lignin <- tree_dat_clean %>% 
@@ -652,6 +656,9 @@ The predictive modeling for NSC used the same process as for Phenolics and Ligni
 
 Once again the r code is available for more details on this process.
 
+In the first graph much of the data is intermixed and the predictions are rather clumped together. For *P. serontina*, the predicted values for NSC are higher in High and Med light levels which tracks very well with the actual data. 
+
+In the second graph the predictions once again track rather well with the data for *P. serontina*. Sterilized soils and the Low light category show lower NSC levels. It's difficult to see relationships in the other species since the data is either clumped together or there's significantly more/less data points between categories.  
 
 ```{r NSC modeling output, echo=FALSE, include=TRUE}
 df_NSC <- tree_dat_clean %>% 
@@ -694,6 +701,10 @@ ggplot(fullpreds_NSC,aes(x=Conspecific,y=pred, shape  = Light_Cat)) +
 The predictive modeling for NSC used the same process as for Phenolics and Lignin, but instead I used mod7. A preview of the predictions can be seen below. The predictions for NSC also match up quite well with the real values. 
 
 Once again the r code is available for more details on this process.
+
+In the first graph much of the data is intermixed and the predictions are rather clumped together. For *P. serontina*, the predicted values for NSC are higher in High and Med light levels which tracks very well with the actual data. 
+
+In the second graph the predictions once again track rather well with the data for *P. serontina*. Sterilized soils and the Low light category show lower NSC levels. It's difficult to see relationships in the other species since the data is either clumped together or there's significantly more/less data points between categories.  
 
 
 ```{r NSC modeling r code, echo=TRUE}
