@@ -1,17 +1,3 @@
----
-title: "Shiny App Final Project"
-author: "Jessica Richards"
-date: "2024-12-05"
-output: html_document
-runtime: shiny
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-
-```{r echo=FALSE}
 library(shiny)
 library(tidyverse)
 library(modelr)
@@ -25,13 +11,13 @@ df_shiny <- tree_dat %>%
 df_shiny %>% dplyr::select("Phenolics","pred")
 
 new_shiny_df = data.frame(Species = c('Acer saccharum', 'Prunus serotina', 'Quercus alba', 'Quercus rubra', NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA), 
-                     Light_ISF = c(.1, .2, .3, .4, .5, .6, .7, .8, .9, .10, .11, .12, .13, .14, .15, .16, .17, .18, .19, .20))
+                          Light_ISF = c(.1, .2, .3, .4, .5, .6, .7, .8, .9, .10, .11, .12, .13, .14, .15, .16, .17, .18, .19, .20))
 
 pred_shiny = predict(mod_shiny, newdata = new_shiny_df)
 
 hyp_preds_shiny <- data.frame(Species = new_shiny_df$Species,
-                            Light_ISF = new_shiny_df$Light_ISF,
-                            pred_shiny = pred_shiny)
+                              Light_ISF = new_shiny_df$Light_ISF,
+                              pred_shiny = pred_shiny)
 
 df_shiny$PredictionType <- "Real"
 hyp_preds_shiny$PredictionType <- "Hypothetical"
@@ -60,38 +46,38 @@ ui <- fluidPage(
 server <- function(input, output) {
   
   output$plot1 <- renderPlot({
-     new_data <- data.frame(
+    new_data <- data.frame(
       Light_ISF = input$num,
       Species = rep(unique(fullpreds_shiny$Species), each = length(input$num))
     )
-        new_data$pred_shiny <- predict(mod_shiny, newdata = new_data)
- combined_data <- bind_rows(
+    new_data$pred_shiny <- predict(mod_shiny, newdata = new_data)
+    combined_data <- bind_rows(
       fullpreds_shiny %>% filter(Light_ISF == input$num),  # Real data for selected Light_ISF
       new_data %>% mutate(PredictionType = "Hypothetical")  # New hypothetical data
     )
-
- ggplot() +
+    
+    ggplot() +
       geom_point(data = fullpreds_shiny, 
                  aes(x = Light_ISF, y = Phenolics, color = Species), 
                  alpha = 0.5, size = 1.5) + 
-            geom_point(data = combined_data, 
-                       aes(x = Light_ISF, y = pred_shiny, 
-                            label = Species), size = 3) +
-   geom_text(data = combined_data , 
-            aes(x = Light_ISF, y = pred_shiny, label = Species), 
-            vjust = -0.8, size = 4) +
+      geom_point(data = combined_data, 
+                 aes(x = Light_ISF, y = pred_shiny, 
+                     label = Species), size = 3) +
+      geom_text(data = combined_data , 
+                aes(x = Light_ISF, y = pred_shiny, label = Species), 
+                vjust = -0.8, size = 4) +
       scale_color_manual(values = c("Acer saccharum" = "blue", 
-                                   "Prunus serotina" = "orange", 
-                                   "Quercus alba" = "darkgreen", 
-                                   "Quercus rubra" = "purple")) + 
+                                    "Prunus serotina" = "orange", 
+                                    "Quercus alba" = "darkgreen", 
+                                    "Quercus rubra" = "purple")) + 
       labs(title = paste("Predictions for Light_ISF =", input$num),
            x = "Light_ISF", y = "Phenolics Prediction") +
       theme_minimal() +
       theme(legend.title = element_blank()) +
       xlim(0, .21) +
       ylim(-1, 6)
- 
- 
+    
+    
   })
   output$info <- renderPrint({
     req(input$plot_click)
@@ -101,6 +87,4 @@ server <- function(input, output) {
 
 # Run the Shiny app
 shinyApp(ui = ui, server = server)
-
-
 

@@ -8,7 +8,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## [BIOL-3100-Final-Project](./BIOL3100_Final_Project.html)##
+## [BIOL-3100-Final-Project](./BIOL3100_Final_Project.html) | 
+[Shiny App](./Shiny_App_Final_Project.html) ##
 
 ## Jessica Richards - Biology and Biochemistry Major at UVU
 

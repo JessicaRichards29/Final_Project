@@ -13,12 +13,16 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(easystats)
 library(modelr)
+library(shiny)
 
 ```
 
 # Tree Seedling Survival Responses Data
 
+[Fancy Shiny App](./https://t6syzy-jessica-richards.shinyapps.io/shiny_app_stuff/)
+
 ### Source
+
 
 [Original Dataset](./Tree_Data.csv)
 
@@ -759,6 +763,6 @@ ggplot(fullpreds_NSC,aes(x=Conspecific,y=pred, shape  = Light_Cat)) +
 
 ```
 
-
-
 # Conclusions
+
+I've come to the conclusion that i hate this class. 

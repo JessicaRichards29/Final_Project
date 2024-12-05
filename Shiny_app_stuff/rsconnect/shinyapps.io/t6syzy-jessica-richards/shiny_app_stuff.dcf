@@ -1,0 +1,12 @@
+name: shiny_app_stuff
+title: Shiny_app_stuff
+username: t6syzy-jessica-richards
+account: t6syzy-jessica-richards
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13528027
+bundleId: 9465963
+url: https://t6syzy-jessica-richards.shinyapps.io/shiny_app_stuff/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
