@@ -19,7 +19,6 @@ library(shiny)
 
 # Tree Seedling Survival Responses Data
 
-[Fancy Shiny App](./https://t6syzy-jessica-richards.shinyapps.io/shiny_app_stuff/)
 
 ### Source
 
@@ -762,6 +761,11 @@ ggplot(fullpreds_NSC,aes(x=Conspecific,y=pred, shape  = Light_Cat)) +
   facet_wrap(~Species, scales = 'free')
 
 ```
+
+# Shiny App
+
+https://t6syzy-jessica-richards.shinyapps.io/shiny_app_stuff/ 
+
 
 # Conclusions
 
